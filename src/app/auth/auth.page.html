@@ -8,7 +8,7 @@
   <form #form="ngForm" (ngSubmit)="onSubmit(form)">
     <ion-grid>
       <ion-row>
-        <ion-col side-sm="6" offset-sm="3">
+        <ion-col size-sm="6" offset-sm="3">
           <ion-list>
               <ion-item>
                 <ion-label position="floating">Email</ion-label>
@@ -28,7 +28,7 @@
         </ion-col>
       </ion-row>
       <ion-row>
-        <ion-col side-sm="6" offset-sm="3">
+        <ion-col size-sm="6" offset-sm="3">
             <ion-button color="primary" fill="clear" expand="block" (click)="onSwitchAuthMode()">Switch to {{isLogin ? 'Signup' : 'Login'}}</ion-button>
             <ion-button type="submit" color="primary" class="ion-padding-horizontal" expand="block" (click)="onLogin()" [disabled]="!form.valid" >
               Login
