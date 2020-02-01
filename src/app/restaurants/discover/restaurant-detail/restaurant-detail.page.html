@@ -1,0 +1,12 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/restaurants/tabs/discover"></ion-back-button>
+    </ion-buttons>
+    <ion-title>{{restaurant.name}}</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-button color="primary" class="ion-margin" (click)="onOrderRestaurant()">Order</ion-button>
+</ion-content>

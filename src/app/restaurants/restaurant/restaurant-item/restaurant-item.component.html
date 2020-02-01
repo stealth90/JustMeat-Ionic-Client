@@ -1,0 +1,14 @@
+<ion-item [routerLink]="['/', 'restaurants' , 'tabs' , 'restaurant' , restaurant._id ]">
+  <ion-thumbnail slot="start">
+    <ion-img [src]="restaurant.avatar"></ion-img>
+  </ion-thumbnail>
+  <ion-label>
+    <h1>{{restaurant.name}}</h1>
+    <div class="restaurant-detail">
+      <ion-icon name="calendar"></ion-icon>
+      <ion-text color="primary" class="space-left">{{getDummyDate | date}}</ion-text>
+      <span>to</span>
+      <ion-text color="primary" class="space-left">{{getDummyDate | date}}</ion-text>
+    </div>
+  </ion-label>
+</ion-item>
