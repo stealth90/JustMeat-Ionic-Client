@@ -4,9 +4,95 @@
         <ion-back-button defaultHref="/restaurants/tabs/restaurant"></ion-back-button>
     </ion-buttons>
     <ion-title>Edit Restaurant</ion-title>
+    <ion-buttons slot="primary">
+      <ion-button (click)="onCreateRestaurant()" [disabled]="!form.valid">
+        <ion-icon name="checkmark" slot="icon-only"></ion-icon>
+      </ion-button>
+    </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
-
+    <form [formGroup]="form">
+        <ion-grid>
+          <ion-row>
+            <ion-col size-sm="6" offset-sm="3">
+              <ion-item>
+                <ion-label position="floating">Name</ion-label>
+                <ion-input type="text" autocomplete autocorrect formControlName="name"></ion-input>
+              </ion-item>
+            </ion-col>
+          </ion-row>
+          <ion-row>
+            <ion-col size-sm="6" offset-sm="3">
+              <ion-item>
+                <ion-label position="floating">Address</ion-label>
+                <ion-input type="text" formControlName="address"></ion-input>
+              </ion-item>
+            </ion-col>
+          </ion-row>
+          <ion-row>
+            <ion-col size-sm="6" offset-sm="3">
+              <ion-item>
+                <ion-label position="floating">City</ion-label>
+                <ion-input type="text" autocomplete autocorrect formControlName="city"></ion-input>
+              </ion-item>
+            </ion-col>
+          </ion-row>
+          <ion-row>
+            <ion-col size-sm="6" offset-sm="3">
+              <ion-item>
+                <ion-label position="floating">Email</ion-label>
+                <ion-input type="email" autocomplete autocorrect formControlName="email"></ion-input>
+              </ion-item>
+            </ion-col>
+          </ion-row>
+          <ion-row *ngIf="!form.get('email').valid && form.get('email').touched">
+            <ion-col size-sm="6" offset-sm="3">
+              <ion-text>You must insert valid email.</ion-text>
+            </ion-col>
+          </ion-row>
+          <ion-row>
+            <ion-col size-sm="6" offset-sm="3">
+              <ion-item>
+                <ion-label position="floating">Typology</ion-label>
+                <ion-input type="text" autocomplete autocorrect formControlName="typology"></ion-input>
+              </ion-item>
+            </ion-col>
+          </ion-row>
+          <ion-row>
+            <ion-col size-sm="6" offset-sm="3">
+              <ion-button (click)="addPlate()"><ion-icon name="add"></ion-icon></ion-button>
+              <ion-list  formArrayName="plates" *ngIf="formData.controls.length > 0">
+                <ion-grid style="border:1px solid red" *ngFor="let item of formData.controls; let i = index;">
+                  <div [formGroupName]="i">
+                    <ion-row >
+                      <ion-col>
+                          <ion-text>Piatto {{i+1}}</ion-text>
+                      </ion-col>
+                      <ion-col>
+                        <ion-button (click)="removePlate(i)" ><ion-icon name="trash"></ion-icon></ion-button>
+                      </ion-col>
+                    </ion-row>
+                    <ion-row>
+                      <ion-col>
+                        <ion-item>
+                          <ion-label position="floating">Nome</ion-label>
+                          <ion-input type="text" formControlName="namePlate" ></ion-input>
+                        </ion-item>
+                      </ion-col>
+                      <ion-col>
+                        <ion-item>
+                          <ion-label position="floating">Prezzo</ion-label>
+                          <ion-input type="number" formControlName="pricePlate"></ion-input>
+                        </ion-item>
+                      </ion-col>
+                    </ion-row>
+                </div>
+                </ion-grid>
+              </ion-list>
+            </ion-col>
+          </ion-row>
+        </ion-grid>
+      </form>
 </ion-content>
