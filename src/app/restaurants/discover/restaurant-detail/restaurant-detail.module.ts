@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { NgModule, LOCALE_ID } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 
@@ -16,6 +16,7 @@ import { CreateOrderComponent } from '../../../orders/create-order/create-order.
     IonicModule,
     RestaurantDetailPageRoutingModule
   ],
+
   declarations: [RestaurantDetailPage, CreateOrderComponent],
   entryComponents: [CreateOrderComponent]
 })

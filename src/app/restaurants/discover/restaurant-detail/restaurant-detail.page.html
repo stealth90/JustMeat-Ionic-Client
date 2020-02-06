@@ -2,11 +2,20 @@
   <ion-toolbar>
     <ion-buttons slot="start">
       <ion-back-button defaultHref="/restaurants/tabs/discover"></ion-back-button>
+      <ion-label>Restaurant</ion-label>
     </ion-buttons>
-    <ion-title>{{restaurant.name}}</ion-title>
   </ion-toolbar>
 </ion-header>
 
-<ion-content>
+<ion-content class="ion-no-padding">
+    <ion-item class="ion-no-padding" >
+        <ion-img  [src]="restaurant.avatar"></ion-img>
+    </ion-item>
+    <ion-item>
+      <ion-label class="ion-no-padding">
+        <ion-text>{{restaurant.name}}</ion-text>
+
+      </ion-label>
+    </ion-item>
   <ion-button color="primary" class="ion-margin" (click)="onOrderRestaurant()">Order</ion-button>
 </ion-content>

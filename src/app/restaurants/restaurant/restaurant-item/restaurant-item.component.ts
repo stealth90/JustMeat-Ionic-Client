@@ -12,8 +12,5 @@ export class RestaurantItemComponent implements OnInit {
   constructor() { }
 
   ngOnInit() {}
-  
-  getDummyDate() {
-    return new Date();
-  }
+
 }

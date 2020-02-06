@@ -1,6 +1,8 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, ViewChild } from '@angular/core';
 import { Restaurant } from '../../restaurants/restaurant.model';
 import { ModalController } from '@ionic/angular';
+import { Order, OrderList } from '../order.model';
+import { OrderService } from '../order.service';
 
 @Component({
   selector: 'app-create-order',
@@ -9,17 +11,42 @@ import { ModalController } from '@ionic/angular';
 })
 export class CreateOrderComponent implements OnInit {
   @Input() selectedRestaurant: Restaurant;
+  newOrder: Order;
+  plates: OrderList[] = [];
+  constructor(private ordersService: OrderService, private modalCtrl: ModalController) { }
 
-  constructor(private modalCtrl: ModalController) { }
+  order: Order = {};
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.order = this.ordersService.newOrder;
+  }
 
+  addPlateToOrder(plate) {
+    this.plates.push(plate);
+    this.getTotalAmount();
+  }
+  getTotalAmount() {
+    let totalAmount = 0;
+    for (const item of this.plates) {
+      totalAmount += item.price;
+    }
+    return totalAmount;
+  }
   onCancel() {
     this.modalCtrl.dismiss(null, 'cancel');
   }
 
-  onOrderRestaurant() {
-    this.modalCtrl.dismiss({messagge: 'This is a dummy message!'}, 'confirm');
+  onOrderPlate() {
+    this.plates.forEach((plate) => {
+      plate.quantity = this.plates.reduce((acc, item) => {
+        if (item.name === plate.name) {
+          return acc + 1;
+        }
+        return acc;
+      }, 0 );
+    });
+    this.modalCtrl.dismiss({ orderingPlates: [...new Set(this.plates)]
+    }, 'confirm');
   }
 
 }

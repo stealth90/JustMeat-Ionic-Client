@@ -10,8 +10,8 @@ export interface Restaurant {
     avatar?: string;
 }
 
-export interface Plate{
+export interface Plate {
     _id: string;
-    name: string;
-    price: number;
+    namePlate: string;
+    pricePlate: number;
 }

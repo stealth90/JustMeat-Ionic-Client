@@ -19,6 +19,5 @@ export class OrdersPage implements OnInit {
 
   onCancelOrder(orderId: string, slidingEl: IonItemSliding){
     slidingEl.close();
-    
   }
 }

@@ -5,11 +5,22 @@
       <ion-button (click)="onCancel()">
         <ion-icon name="close"></ion-icon>
       </ion-button>
+      <ion-button size="small" style="background-color: primary; border: 1px solid white;" [disabled]="plates.length === 0" (click)="onOrderPlate()">
+        <ion-icon class="ion-margin-end" color="white" name="basket"></ion-icon>
+        <ion-text> {{getTotalAmount()  | currency:'EUR':'symbol-narrow':'1.2-2'}}</ion-text>
+      </ion-button>
     </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
-<ion-content class="ion-text-center ion-padding">
-  <p>{{selectedRestaurant.typology}}</p>
-  <ion-button color="primary" (click)="onOrderRestaurant()">Order!</ion-button>
+<ion-content class="padding">
+  <ion-item  *ngFor="let plate of selectedRestaurant.plates" (click)="addPlateToOrder(plate)">
+    <ion-button  slot="end" >
+      <ion-icon name="add"></ion-icon>
+    </ion-button>
+    <ion-label>
+      <h2>{{plate.namePlate | titlecase}}</h2>
+      <ion-text slot="end">{{plate.pricePlate | currency:'EUR':'symbol-narrow':'1.2-2'}}</ion-text>
+    </ion-label>
+  </ion-item>
 </ion-content>
