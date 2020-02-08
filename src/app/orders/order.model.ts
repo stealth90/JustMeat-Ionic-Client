@@ -1,7 +1,7 @@
 export interface OrderList {
     quantity: number;
-    name: string;
-    price: number;
+    namePlate: string;
+    pricePlate: number;
 }
 export interface Order {
     _id?: string;

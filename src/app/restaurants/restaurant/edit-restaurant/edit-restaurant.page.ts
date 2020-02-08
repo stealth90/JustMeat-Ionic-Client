@@ -1,7 +1,7 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { RestaurantsService } from '../../restaurants.service';
-import { NavController, LoadingController } from '@ionic/angular';
+import { NavController, LoadingController, AlertController } from '@ionic/angular';
 import { Restaurant } from '../../restaurant.model';
 import { FormGroup, FormControl, FormArray, Validators } from '@angular/forms';
 import { Subscription } from 'rxjs';
@@ -13,7 +13,9 @@ import { Subscription } from 'rxjs';
 })
 export class EditRestaurantPage implements OnInit, OnDestroy {
   restaurant: Restaurant;
+  restaurantId: string;
   form: FormGroup;
+  isLoading = false;
   platesRestaurant = new FormArray([]);
   private restaurantSub: Subscription;
 
@@ -22,7 +24,8 @@ export class EditRestaurantPage implements OnInit, OnDestroy {
     private restaurantService: RestaurantsService,
     private navCtrl: NavController,
     private router: Router,
-    private loadingCtrl: LoadingController) { }
+    private loadingCtrl: LoadingController,
+    private alertCtrl: AlertController) { }
 
   ngOnInit() {
     this.route.paramMap.subscribe(async paramMap => {
@@ -30,46 +33,61 @@ export class EditRestaurantPage implements OnInit, OnDestroy {
         this.navCtrl.navigateBack('/restaurants/tabs/restaurant');
         return;
       }
+      this.restaurantId = paramMap.get('restaurantId');
+      this.isLoading = true;
       this.restaurantSub = this.restaurantService
-        .getRestaurant(paramMap.get('restaurantId')).subscribe(restaurant => {
-        this.restaurant = restaurant;
-        restaurant.plates.forEach(plate => {
-          (this.platesRestaurant as FormArray)
-          .push(new FormGroup(
-            {namePlate: new FormControl(plate.namePlate, {
+        .getRestaurant(paramMap.get('restaurantId'))
+        .subscribe(restaurant => {
+          this.restaurant = restaurant;
+          restaurant.plates.forEach(plate => {
+            (this.platesRestaurant as FormArray)
+            .push(new FormGroup(
+              {namePlate: new FormControl(plate.namePlate, {
+                updateOn: 'change',
+                validators: [Validators.required]
+              }),
+              pricePlate: new FormControl(plate.pricePlate, {
+                updateOn: 'change',
+                validators: [Validators.required, Validators.min(0.5)]
+              })
+            }));
+          });
+          this.form = new FormGroup({
+            name: new FormControl(restaurant.name, {
+            updateOn: 'change',
+            validators: [Validators.required]
+            }),
+            address: new FormControl(restaurant.address, {
               updateOn: 'change',
               validators: [Validators.required]
             }),
-            pricePlate: new FormControl(plate.pricePlate, {
+            city: new FormControl(restaurant.city, {
               updateOn: 'change',
-              validators: [Validators.required, Validators.min(0.5)]
-            })
-          }));
-        });
-        this.form = new FormGroup({
-          name: new FormControl(restaurant.name, {
-          updateOn: 'change',
-          validators: [Validators.required]
-          }),
-          address: new FormControl(restaurant.address, {
-            updateOn: 'change',
-            validators: [Validators.required]
-          }),
-          city: new FormControl(restaurant.city, {
-            updateOn: 'change',
-            validators: [Validators.required]
-          }),
-          email: new FormControl(restaurant.email, {
-            updateOn: 'blur',
-            validators: [Validators.required, Validators.email]
-          }),
-          typology: new FormControl(restaurant.typology, {
-            updateOn: 'change',
-            validators: [Validators.required, Validators.maxLength(15)]
-          }),
-          plates: this.platesRestaurant
-        });
-      });
+              validators: [Validators.required]
+            }),
+            email: new FormControl(restaurant.email, {
+              updateOn: 'blur',
+              validators: [Validators.required, Validators.email]
+            }),
+            typology: new FormControl(restaurant.typology, {
+              updateOn: 'change',
+              validators: [Validators.required, Validators.maxLength(15)]
+            }),
+            plates: this.platesRestaurant
+          });
+          this.isLoading = false;
+        }, error => {
+          this.alertCtrl.create({
+            header: 'An error occurred!',
+            message: 'Restaurant could not be fetched. Please try again later.',
+            buttons: [{text: 'Okay', handler: () => {
+              this.router.navigate(['restaurants/tabs/restaurant']);
+            }}]
+          }).then(alertElm => {
+            alertElm.present();
+          });
+        }
+      );
     });
   }
 

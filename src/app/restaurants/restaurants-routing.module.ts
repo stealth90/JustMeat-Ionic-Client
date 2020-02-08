@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
 import { RestaurantsPage } from './restaurants.page';
+import { AuthGuard } from '../auth/auth.guard';
 
 const routes: Routes = [
   {
@@ -36,12 +37,13 @@ const routes: Routes = [
           {
             path: 'edit/:restaurantId',
             loadChildren: () => import('./restaurant/edit-restaurant/edit-restaurant.module').then( m => m.EditRestaurantPageModule)
-          },
-          {
-            path: ':restaurantId',
-            loadChildren: () => import('./restaurant/restaurant-orders/restaurant-orders.module').then( m => m.RestaurantOrdersPageModule )
           }
         ]
+      },
+      {
+        path: 'orders',
+        loadChildren: () => import('../orders/orders.module').then( m => m.OrdersPageModule),
+        canLoad: [AuthGuard]
       },
       {
         path: '',

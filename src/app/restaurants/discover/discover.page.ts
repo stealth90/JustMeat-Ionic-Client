@@ -15,17 +15,21 @@ export class DiscoverPage implements OnInit, OnDestroy {
 
   public loadedRestaurants: Restaurant[] = [];
   private restaurantsSub: Subscription;
+  isLoading = false;
 
   constructor(private restaurantService: RestaurantsService, private menuCtrl: MenuController) {}
 
   ngOnInit() {
     this.restaurantsSub = this.restaurantService.restaurants.subscribe(restaurants => {
-        this.loadedRestaurants = [...restaurants];
+        this.loadedRestaurants = restaurants;
     });
   }
 
   ionViewWillEnter() {
-    this.restaurantService.fetchRestaurants().subscribe();
+    this.isLoading = true;
+    this.restaurantService.fetchRestaurants().subscribe(() => {
+      this.isLoading = false;
+    });
   }
 
 
