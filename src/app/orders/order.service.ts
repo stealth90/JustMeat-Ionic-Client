@@ -27,14 +27,18 @@ export class OrderService {
 
     createOrder(order: Order) {
         let generatedId: string;
-        return this.httpClient.post<Order>(`${this.orderUrl}/create`, order).pipe(switchMap(resData => {
-            generatedId = resData._id;
-            return this.orders;
-        }),
-        take(1),
-        tap(orders => {
-            order._id = generatedId;
-            this._orders.next(orders.concat(order));
-        }));
+        return this.httpClient
+            .post<Order>(`${this.orderUrl}/create`, order)
+            .pipe(
+                switchMap(resData => {
+                    generatedId = resData._id;
+                    return this.orders;
+                }),
+                take(1),
+                tap(orders => {
+                    order._id = generatedId;
+                    this._orders.next(orders.concat(order));
+                })
+            );
     }
 }

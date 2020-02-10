@@ -77,11 +77,19 @@ export class NewRestaurantPage implements OnInit {
       message: 'Creating restaurant...'
     }).then(async loadingElm => {
       loadingElm.present();
-      (await this.restaurantsService.newRestaurant(this.form.value)).subscribe(() => {
-        loadingElm.dismiss();
-        this.form.reset();
-        this.router.navigate(['/restaurants/tabs/restaurant']);
-      });
+      this.restaurantsService
+        .newRestaurant(
+          this.form.value.name,
+          this.form.value.address,
+          this.form.value.city,
+          this.form.value.email,
+          this.form.value.typology,
+          this.form.value.plates
+        ).subscribe(() => {
+          loadingElm.dismiss();
+          this.form.reset();
+          this.router.navigate(['/restaurants/tabs/restaurant']);
+        });
     });
   }
 

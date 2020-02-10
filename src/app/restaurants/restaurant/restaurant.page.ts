@@ -19,7 +19,7 @@ export class RestaurantPage implements OnInit, OnDestroy {
 
   constructor(private restaurantService: RestaurantsService, private router: Router) { }
 
-  async ngOnInit() {
+  ngOnInit() {
     this.restaurantsSub = this.restaurantService.restaurants.subscribe(restaurants => {
       this.loadedRestaurants = restaurants;
     });
