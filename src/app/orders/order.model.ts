@@ -8,7 +8,7 @@ export interface Order {
     userId?: string;
     restaurantId?: string;
     date?: string;
-    shippingAddress?: string;
+    address?: string;
     orderItems?: Array<OrderList>;
     totalAmount?: number;
     rating?: number;
