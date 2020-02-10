@@ -15,11 +15,11 @@ export class AuthService {
   constructor(private httpClient: HttpClient, private router: Router) { }
 
   public registerUser(newUser: NewUser) {
-    return this.httpClient.post<NewUser & {response: string}>(`${this.authUrl}/`, newUser);
+    return this.httpClient.post<NewUser & {token: string}>(`${this.authUrl}/`, newUser);
   }
 
   public loginUser(loginUser: LoginRule) {
-    return this.httpClient.post<LoginRule & {response: string}>(`${this.authUrl}/login`, loginUser);
+    return this.httpClient.post<LoginRule & {token: string}>(`${this.authUrl}/login`, loginUser);
   }
 
   public loggedIn(): boolean {

@@ -56,7 +56,7 @@ export class AuthPage implements OnInit {
         .then( (alert) => {
           alert.present();
         });
-        localStorage.setItem('token', res.response);
+        localStorage.setItem('token', res.token);
         this.router.navigate(['/auth']);
       },
       // tslint:disable-next-line: variable-name
@@ -88,7 +88,7 @@ export class AuthPage implements OnInit {
             loadingEl.dismiss();
           }, 1000);
         });
-        localStorage.setItem('token', res.response);
+        localStorage.setItem('token', res.token);
         this.router.navigateByUrl(this.returnUrl);
       },
       // tslint:disable-next-line: variable-name
@@ -118,11 +118,9 @@ export class AuthPage implements OnInit {
       password
     };
     if (this.isLogin) {
-      console.log('Sono nel login');
       form.reset();
       this.onLogin();
     } else {
-      console.log('Sono nella registrazione');
       const name = form.value.name;
       const surname = form.value.surname;
       const address = form.value.address;
