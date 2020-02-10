@@ -15,14 +15,14 @@ export class AuthService {
   constructor(private httpClient: HttpClient, private router: Router) { }
 
   public registerUser(newUser: NewUser) {
-    return this.httpClient.post<NewUser>(`${this.authUrl}/`, newUser);
+    return this.httpClient.post<NewUser & {response: string}>(`${this.authUrl}/`, newUser);
   }
 
   public loginUser(loginUser: LoginRule) {
     return this.httpClient.post<LoginRule & {response: string}>(`${this.authUrl}/login`, loginUser);
   }
 
-  public loggedIn() {
+  public loggedIn(): boolean {
     return !!localStorage.getItem('token');
   }
 
@@ -31,7 +31,7 @@ export class AuthService {
     this.router.navigate(['/auth']);
   }
 
-  public getToken() {
+  public getToken(): string {
     return localStorage.getItem('token');
   }
 

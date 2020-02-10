@@ -4,6 +4,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { LoadingController, AlertController } from '@ionic/angular';
 import { NgForm } from '@angular/forms';
 import { LoginRule } from './models/loginInterface.model';
+import { NewUser } from './models/userInterface.model';
 
 @Component({
   selector: 'app-auth',
@@ -16,6 +17,15 @@ export class AuthPage implements OnInit {
   loginDetails: LoginRule = {
     username: '',
     password: ''
+  };
+  signupDetails: NewUser = {
+    username: '',
+    password: '',
+    name: '',
+    surname: '',
+    address: '',
+    phone: '',
+    email: ''
   };
   returnUrl: string;
 
@@ -31,6 +41,41 @@ export class AuthPage implements OnInit {
     // get return url from route parameters or default to '/'
     this.returnUrl = this.route.snapshot.queryParams.returnUrl || '/';
   }
+
+  onSignup() {
+    this.authService.registerUser(this.signupDetails).subscribe(
+      res => {
+        this.alert.create({
+          message: 'Successifull register',
+          buttons: [{
+            text: 'OK',
+            role: 'Cancel',
+            handler: () => { this.alert.dismiss(); }
+          }]
+        })
+        .then( (alert) => {
+          alert.present();
+        });
+        localStorage.setItem('token', res.response);
+        this.router.navigate(['/auth']);
+      },
+      // tslint:disable-next-line: variable-name
+      _err => {
+        this.alert.create({
+          message: 'Invalid signup details',
+          buttons: [{
+            text: 'OK',
+            role: 'Cancel',
+            handler: () => { this.alert.dismiss(); }
+          }]
+        })
+        .then( (alert) => {
+          alert.present();
+        });
+      }
+    );
+  }
+
   onLogin() {
     this.isLoading = true;
     this.authService.loginUser(this.loginDetails).subscribe(
@@ -46,7 +91,8 @@ export class AuthPage implements OnInit {
         localStorage.setItem('token', res.response);
         this.router.navigateByUrl(this.returnUrl);
       },
-      err => {
+      // tslint:disable-next-line: variable-name
+      _err => {
         this.alert.create({
           message: 'Invalid login details',
           buttons: [{
@@ -58,7 +104,6 @@ export class AuthPage implements OnInit {
         .then( (alert) => {
           alert.present();
         });
-        console.log(err);
       }
     );
   }
@@ -73,10 +118,27 @@ export class AuthPage implements OnInit {
       password
     };
     if (this.isLogin) {
+      console.log('Sono nel login');
       form.reset();
       this.onLogin();
     } else {
-      // Send a request to signup servers
+      console.log('Sono nella registrazione');
+      const name = form.value.name;
+      const surname = form.value.surname;
+      const address = form.value.address;
+      const phone = form.value.phone;
+      const email = form.value.email;
+      this.signupDetails = {
+        username,
+        password,
+        name,
+        surname,
+        address,
+        phone,
+        email
+      };
+      form.reset();
+      this.onSignup();
     }
   }
 
