@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from './auth.service';
 import { Router, ActivatedRoute } from '@angular/router';
-import { LoadingController } from '@ionic/angular';
+import { LoadingController, AlertController } from '@ionic/angular';
 import { NgForm } from '@angular/forms';
 import { LoginRule } from './models/loginInterface.model';
 
@@ -23,7 +23,8 @@ export class AuthPage implements OnInit {
     private authService: AuthService,
     private router: Router,
     private route: ActivatedRoute,
-    private loadingCtrl: LoadingController
+    private loadingCtrl: LoadingController,
+    private alert: AlertController
     ) { }
 
   ngOnInit() {
@@ -34,23 +35,32 @@ export class AuthPage implements OnInit {
     this.isLoading = true;
     this.authService.loginUser(this.loginDetails).subscribe(
       res => {
-        console.log(res);
+        this.loadingCtrl.create({keyboardClose: true, message: 'Loggin in...'})
+        .then(loadingEl => {
+          loadingEl.present();
+          setTimeout(() => {
+            this.isLoading = false;
+            loadingEl.dismiss();
+          }, 1000);
+        });
         localStorage.setItem('token', res.response);
         this.router.navigateByUrl(this.returnUrl);
       },
       err => {
+        this.alert.create({
+          message: 'Invalid login details',
+          buttons: [{
+            text: 'OK',
+            role: 'Cancel',
+            handler: () => { this.alert.dismiss(); }
+          }]
+        })
+        .then( (alert) => {
+          alert.present();
+        });
         console.log(err);
       }
     );
-    this.loadingCtrl.create({keyboardClose: true, message: 'Loggin in...'})
-    .then(loadingEl => {
-      loadingEl.present();
-      setTimeout(() => {
-        this.isLoading = false;
-        loadingEl.dismiss();
-        this.router.navigateByUrl('/restaurants/tabs/discover');
-      }, 1500);
-    });
   }
   onSubmit(form: NgForm) {
     if (!form.valid) {
