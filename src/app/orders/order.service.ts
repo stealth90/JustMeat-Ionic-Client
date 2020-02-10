@@ -4,11 +4,13 @@ import { HttpClient } from '@angular/common/http';
 import { AuthService } from '../auth/auth.service';
 import { BehaviorSubject } from 'rxjs';
 import { switchMap, tap, take, map } from 'rxjs/operators';
+import * as jwt_decode from 'jwt-decode';
 
 @Injectable({providedIn: 'root'})
 
 export class OrderService {
     newOrder: Order = {} ;
+    userId: string;
     private orderUrl = 'http://localhost:3006/orders';
     private getUserOrderUrl = 'http://localhost:3006/users';
     private getRestaurantOrderUrl = 'http://localhost:3006/restaurants';
@@ -25,35 +27,39 @@ export class OrderService {
         private httpClient: HttpClient) {}
 
     fetchOrders() {
-        return this.httpClient.get<Order[]>(`${this.getUserOrderUrl}`)
-        .pipe(
-            map(resData => {
-                const orders = [];
-                resData.forEach(element => {
-                    orders.push(element);
-                });
-                return orders;
-            }),
-            tap(orders => {
-                this._orders.next(orders);
-            })
-        );
+        const token = this.authService.getToken();
+        const decoded = jwt_decode(token) as any;
+        this.userId = decoded.subject;
+        if (this.authService.checkAdmin()) {
+            return this.httpClient.get<Order[]>(`${this.getRestaurantOrderUrl}/${this.userId}/orders`)
+            .pipe(
+                map(resData => {
+                    const orders = [];
+                    resData.forEach(element => {
+                        orders.push(element);
+                    });
+                    return orders;
+                }),
+                tap(orders => {
+                    this._orders.next(orders);
+                })
+            );
+        } else {
+            return this.httpClient.get<Order[]>(`${this.getUserOrderUrl}/${this.userId}/orders`)
+            .pipe(
+                map(resData => {
+                    const orders = [];
+                    resData.forEach(element => {
+                        orders.push(element);
+                    });
+                    return orders;
+                }),
+                tap(orders => {
+                    this._orders.next(orders);
+                })
+            );
+        }
     }
-    /* fetchOrdersByRestaurant() {
-        return this.httpClient.get<Order[]>(`${this.getRestaurantOrderUrl}`)
-        .pipe(
-            map(resData => {
-                const orders = [];
-                resData.forEach(element => {
-                    orders.push(element);
-                });
-                return orders;
-            }),
-            tap(orders => {
-                this._orders.next(orders);
-            })
-        );
-    } */
 
     getOrder(id: string) {
         return this.orders.pipe(
