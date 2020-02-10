@@ -11,12 +11,12 @@ const routes: Routes = [
   {
     path: 'restaurants',
     loadChildren: () => import('./restaurants/restaurants.module').then( m => m.RestaurantsPageModule),
-    canLoad: [AuthGuard]
+    canActivate: [AuthGuard]
   },
   {
     path: 'orders',
     loadChildren: () => import('./orders/orders.module').then( m => m.OrdersPageModule),
-    canLoad: [AuthGuard]
+    canActivate: [AuthGuard]
   }
 ];
 
