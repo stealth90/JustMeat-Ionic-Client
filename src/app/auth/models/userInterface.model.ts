@@ -7,6 +7,3 @@ export interface NewUser {
     phone: string;
     email: string;
 }
-export interface User extends NewUser {
-    id: string;
-}

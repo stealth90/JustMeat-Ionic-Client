@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from './auth.service';
-import { Router } from '@angular/router';
-import { LoadingController } from '@ionic/angular';
+import { Router, ActivatedRoute } from '@angular/router';
+import { LoadingController, AlertController } from '@ionic/angular';
 import { NgForm } from '@angular/forms';
+import { LoginRule } from './models/loginInterface.model';
 
 @Component({
   selector: 'app-auth',
@@ -12,38 +13,74 @@ import { NgForm } from '@angular/forms';
 export class AuthPage implements OnInit {
   isLoading = false;
   isLogin = true;
-  constructor(private authService: AuthService, private router: Router, private loadingCtrl: LoadingController) { }
+  loginDetails: LoginRule = {
+    username: '',
+    password: ''
+  };
+  returnUrl: string;
+
+  constructor(
+    private authService: AuthService,
+    private router: Router,
+    private route: ActivatedRoute,
+    private loadingCtrl: LoadingController,
+    private alert: AlertController
+    ) { }
 
   ngOnInit() {
+    // get return url from route parameters or default to '/'
+    this.returnUrl = this.route.snapshot.queryParams.returnUrl || '/';
   }
   onLogin() {
     this.isLoading = true;
-    this.authService.login();
-    this.loadingCtrl.create({keyboardClose: true, message: 'Loggin in...'})
-    .then(loadingEl => {
-      loadingEl.present();
-      setTimeout(() => {
-        this.isLoading = false;
-        loadingEl.dismiss();
-        this.router.navigateByUrl('/restaurants/tabs/discover');
-      }, 1500);
-    });
+    this.authService.loginUser(this.loginDetails).subscribe(
+      res => {
+        this.loadingCtrl.create({keyboardClose: true, message: 'Loggin in...'})
+        .then(loadingEl => {
+          loadingEl.present();
+          setTimeout(() => {
+            this.isLoading = false;
+            loadingEl.dismiss();
+          }, 1000);
+        });
+        localStorage.setItem('token', res.response);
+        this.router.navigateByUrl(this.returnUrl);
+      },
+      err => {
+        this.alert.create({
+          message: 'Invalid login details',
+          buttons: [{
+            text: 'OK',
+            role: 'Cancel',
+            handler: () => { this.alert.dismiss(); }
+          }]
+        })
+        .then( (alert) => {
+          alert.present();
+        });
+        console.log(err);
+      }
+    );
   }
   onSubmit(form: NgForm) {
     if (!form.valid) {
       return;
     }
-    const email = form.value.email;
+    const username = form.value.username;
     const password = form.value.password;
-    console.log(email,password);
-    if(this.isLogin){
-      //send request to login servers
-    } else{
-      //Send a request to signup servers
+    this.loginDetails = {
+      username,
+      password
+    };
+    if (this.isLogin) {
+      form.reset();
+      this.onLogin();
+    } else {
+      // Send a request to signup servers
     }
   }
 
-  onSwitchAuthMode(){
+  onSwitchAuthMode() {
     this.isLogin = !this.isLogin;
   }
 }

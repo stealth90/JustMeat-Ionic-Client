@@ -1,4 +1,4 @@
 export interface LoginRule {
-    email: string;
+    username: string;
     password: string;
 }
