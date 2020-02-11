@@ -1,22 +1,35 @@
-import { Injectable, Injector } from '@angular/core';
-import { HttpInterceptor, HttpRequest, HttpHandler, HttpEvent } from '@angular/common/http';
+import { Injectable} from '@angular/core';
+import { HttpInterceptor, HttpRequest, HttpHandler, HttpEvent, HttpResponse } from '@angular/common/http';
 import { AuthService } from './auth.service';
 import { Observable } from 'rxjs';
+import { tap } from 'rxjs/operators';
+import { Router } from '@angular/router';
+
 
 @Injectable({
   providedIn: 'root'
 })
 export class TokenInterceptorService implements HttpInterceptor {
 
-  constructor(private injector: Injector) { }
+  constructor(private authService: AuthService, private router: Router) { }
 
   intercept(req: HttpRequest<any> , next: HttpHandler): Observable<HttpEvent<any>> {
-    const authService = this.injector.get(AuthService);
-    const tokenizedReq = req.clone({
+    req = req.clone({
       setHeaders: {
-        Autorization: `Bearer ${authService.getToken()}`
+        Authorization: `${this.authService.getToken()}`
       }
     });
-    return next.handle(tokenizedReq);
+    return next.handle(req)
+      .pipe(
+        tap( (event: HttpEvent<any>) => {
+          if (event instanceof HttpResponse) {
+            return;
+          }
+        },(err:any) => {
+          if (err.status === 401){
+            console.log('Unauthorized')
+          }
+        })
+      );
   }
 }
