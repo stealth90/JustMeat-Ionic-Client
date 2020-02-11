@@ -49,7 +49,6 @@ export class OrderService {
                 .pipe(
                     map(resData => {
                         const orders = [];
-                        console.log(resData);
                         resData.forEach(element => {
                             orders.push(element);
                         });

@@ -16,7 +16,7 @@ export class TokenInterceptorService implements HttpInterceptor {
   intercept(req: HttpRequest<any> , next: HttpHandler): Observable<HttpEvent<any>> {
     req = req.clone({
       setHeaders: {
-        Authorization: `${this.authService.getToken()}`
+        Authorization: `Bearer ${this.authService.getToken()}`
       }
     });
     return next.handle(req)
@@ -25,9 +25,9 @@ export class TokenInterceptorService implements HttpInterceptor {
           if (event instanceof HttpResponse) {
             return;
           }
-        },(err:any) => {
-          if (err.status === 401){
-            console.log('Unauthorized')
+        }, (err: any) => {
+          if (err.status === 401) {
+            this.router.navigate(['/auth']);
           }
         })
       );
