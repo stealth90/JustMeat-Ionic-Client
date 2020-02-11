@@ -12,10 +12,10 @@
           <ion-list>
               <ion-item>
                 <ion-label position="floating">Email</ion-label>
-                <ion-input type="email" ngModel name="email" required #emailCtrl="ngModel"></ion-input>
+                <ion-input type="email" ngModel name="email" required email #emailCtrl="ngModel"></ion-input>
               </ion-item>
               <ion-item *ngIf="!emailCtrl.valid && emailCtrl.touched" lines="none">
-                <ion-label>Should be a valid username</ion-label>
+                <ion-label>Should be a valid email</ion-label>
               </ion-item>
               <ion-item>
                 <ion-label position="floating">Password</ion-label>
