@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import * as jwt_decode from 'jwt-decode';
-import { HttpClient, HttpResponse } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { LoginRule } from './models/loginInterface.model';
 import { NewUser } from './models/userInterface.model';
@@ -11,7 +11,7 @@ import { NewUser } from './models/userInterface.model';
 export class AuthService {
   authUrl = 'http://localhost:3006/users';
   token: string;
-  decoded: object & { isAdmin: boolean };
+  decoded: object & { isAdmin: boolean, isRestaurant: boolean, restaurant: string };
   constructor(private httpClient: HttpClient, private router: Router) { }
 
   public registerUser(newUser: NewUser) {
@@ -38,8 +38,19 @@ export class AuthService {
   public checkAdmin(): boolean {
     if (this.loggedIn()) {
       this.token = this.getToken();
-      this.decoded = jwt_decode(this.token);
+      this.decoded = jwt_decode(this.token, {header: true});
       if (this.decoded.isAdmin === true ) {
+        return true;
+      }
+    }
+    return false;
+  }
+
+  public isRestaurant(): boolean {
+    if (this.loggedIn()) {
+      this.token = this.getToken();
+      this.decoded = jwt_decode(this.token);
+      if (this.decoded.isRestaurant === true ) {
         return true;
       }
     }

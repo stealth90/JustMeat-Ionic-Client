@@ -15,7 +15,7 @@ export class AuthPage implements OnInit {
   isLoading = false;
   isLogin = true;
   loginDetails: LoginRule = {
-    username: '',
+    email: '',
     password: ''
   };
   signupDetails: NewUser = {
@@ -111,21 +111,23 @@ export class AuthPage implements OnInit {
     if (!form.valid) {
       return;
     }
-    const username = form.value.username;
+    const email = form.value.email;
     const password = form.value.password;
     this.loginDetails = {
-      username,
+      email,
       password
     };
     if (this.isLogin) {
       form.reset();
       this.onLogin();
+      console.log(this.authService.isRestaurant());
+      console.log(this.authService.checkAdmin());
     } else {
+      const username = form.value.username;
       const name = form.value.name;
       const surname = form.value.surname;
       const address = form.value.address;
       const phone = form.value.phone;
-      const email = form.value.email;
       this.signupDetails = {
         username,
         password,
