@@ -7,6 +7,8 @@ import { IonicModule } from '@ionic/angular';
 import { OrdersPageRoutingModule } from './orders-routing.module';
 
 import { OrdersPage } from './orders.page';
+import { TokenInterceptorService } from '../auth/token-interceptor.service';
+import { HTTP_INTERCEPTORS } from '@angular/common/http';
 
 @NgModule({
   imports: [
@@ -14,6 +16,13 @@ import { OrdersPage } from './orders.page';
     FormsModule,
     IonicModule,
     OrdersPageRoutingModule
+  ],
+  providers: [
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: TokenInterceptorService,
+      multi: true 
+    }
   ],
   declarations: [OrdersPage]
 })

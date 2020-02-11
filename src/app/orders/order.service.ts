@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Order } from './order.model';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { AuthService } from '../auth/auth.service';
 import { BehaviorSubject } from 'rxjs';
 import { switchMap, tap, take, map } from 'rxjs/operators';
@@ -9,7 +9,7 @@ import * as jwt_decode from 'jwt-decode';
 @Injectable({providedIn: 'root'})
 
 export class OrderService {
-    newOrder: Order = {} ;
+    newOrder: Order ;
     userId: string;
     private orderUrl = 'http://localhost:3006/orders';
     private getUserOrderUrl = 'http://localhost:3006/users';
@@ -26,40 +26,40 @@ export class OrderService {
         private authService: AuthService,
         private httpClient: HttpClient) {}
 
-    fetchOrders() {
-        const token = this.authService.getToken();
-        const decoded = jwt_decode(token) as any;
-        this.userId = decoded.subject;
-        if (this.authService.checkAdmin()) {
-            return this.httpClient.get<Order[]>(`${this.getRestaurantOrderUrl}/${this.userId}/orders`)
-            .pipe(
-                map(resData => {
-                    const orders = [];
-                    resData.forEach(element => {
-                        orders.push(element);
-                    });
-                    return orders;
-                }),
-                tap(orders => {
-                    this._orders.next(orders);
-                })
-            );
-        } else {
-            return this.httpClient.get<Order[]>(`${this.getUserOrderUrl}/${this.userId}/orders`)
-            .pipe(
-                map(resData => {
-                    const orders = [];
-                    resData.forEach(element => {
-                        orders.push(element);
-                    });
-                    return orders;
-                }),
-                tap(orders => {
-                    this._orders.next(orders);
-                })
-            );
+        fetchOrders() {
+            const token = this.authService.getToken();
+            const decoded = jwt_decode(token) as any;
+            this.userId = decoded.subject;
+            if (this.authService.checkAdmin()) {
+                return this.httpClient.get<Order[]>(`${this.getRestaurantOrderUrl}/${this.userId}/orders`)
+                .pipe(
+                    map(resData => {
+                        const orders = [];
+                        resData.forEach(element => {
+                            orders.push(element);
+                        });
+                        return orders;
+                    }),
+                    tap(orders => {
+                        this._orders.next(orders);
+                    })
+                );
+            } else {
+                return this.httpClient.get<Order[]>(`${this.getUserOrderUrl}/${this.userId}/orders`)
+                .pipe(
+                    map(resData => {
+                        const orders = [];
+                        resData.forEach(element => {
+                            orders.push(element);
+                        });
+                        return orders;
+                    }),
+                    tap(orders => {
+                        this._orders.next(orders);
+                    })
+                );
+            }
         }
-    }
 
     getOrder(id: string) {
         return this.orders.pipe(
@@ -101,7 +101,7 @@ export class OrderService {
                     restaurantId: oldOrder.restaurantId,
                     totalAmount: oldOrder.totalAmount,
                     date: oldOrder.date,
-                    address: oldOrder.address,
+                    shippingAddress: oldOrder.shippingAddress,
                     orderItems : oldOrder.orderItems,
                     rating: oldOrder.rating,
                     statusOrder: true
@@ -131,7 +131,7 @@ export class OrderService {
                     restaurantId: oldOrder.restaurantId,
                     totalAmount: oldOrder.totalAmount,
                     date: oldOrder.date,
-                    address: oldOrder.address,
+                    shippingAddress: oldOrder.shippingAddress,
                     orderItems : oldOrder.orderItems,
                     rating,
                     statusOrder: oldOrder.statusOrder

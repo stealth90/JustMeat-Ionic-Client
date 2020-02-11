@@ -16,8 +16,15 @@
               <ion-item>
                 <ion-label>
                   <h5>N° order :{{order._id}}</h5>
-                  <p>Address: {{order.address}}</p>
+                  <p>Address: {{order.shippingAddress}}</p>
+                  <p>Date: {{order.date | date: 'dd/MM/yyyy'}}</p>
                 </ion-label>
+                <div *ngIf="!order.statusOrder">
+                  <ion-icon style="color:red" name="close" size="large" slot="icon-only"></ion-icon>
+                </div>
+                <div *ngIf="order.statusOrder">
+                  <ion-icon style="color: blue;" name="checkmark" size="large" slot="icon-only"></ion-icon>
+                </div>
               </ion-item>
               <ion-item-options>
                 <ion-item-option color="danger" (click)="onCancelOrder(order._id,slidingOrder)">

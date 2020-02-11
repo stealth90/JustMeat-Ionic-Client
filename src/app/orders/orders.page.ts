@@ -19,7 +19,6 @@ export class OrdersPage implements OnInit, OnDestroy {
   ngOnInit() {
     this.ordersSub = this.ordersService.orders.subscribe(orders => {
       this.loadedOrders = [...orders];
-      console.log(this.loadedOrders);
     });
   }
 

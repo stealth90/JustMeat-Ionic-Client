@@ -15,7 +15,7 @@ export class CreateOrderComponent implements OnInit {
   plates: OrderList[] = [];
   constructor(private ordersService: OrderService, private modalCtrl: ModalController) { }
 
-  order: Order = {};
+  order: Order;
 
   ngOnInit() {
     this.order = this.ordersService.newOrder;
