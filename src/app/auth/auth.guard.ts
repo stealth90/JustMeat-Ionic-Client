@@ -11,7 +11,7 @@ export class AuthGuard implements CanActivate {
 
   // tslint:disable-next-line: variable-name
   canActivate(_route: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean {
-    if (this.authService.loggedIn()) {
+    if (this.authService.loggedIn() && this.authService.isAuthenticated()) {
       return true;
     } else {
       this.router.navigate(['/auth'], { queryParams: { returnUrl: state.url }});

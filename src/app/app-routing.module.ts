@@ -1,9 +1,10 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { AuthGuard } from './auth/auth.guard';
+import { HomepageComponent } from './homepage/homepage.component';
 
 const routes: Routes = [
-  { path: '', redirectTo: 'restaurants', pathMatch: 'full' },
+  { path: '', redirectTo: 'restaurants/tabs/discover', pathMatch: 'full' },
   {
     path: 'auth',
     loadChildren: () => import('./auth/auth.module').then( m => m.AuthPageModule)
@@ -17,7 +18,8 @@ const routes: Routes = [
     path: 'orders',
     loadChildren: () => import('./orders/orders.module').then( m => m.OrdersPageModule),
     canActivate: [AuthGuard]
-  }
+  },
+  { path: 'homepage', component: HomepageComponent}
 ];
 
 @NgModule({
