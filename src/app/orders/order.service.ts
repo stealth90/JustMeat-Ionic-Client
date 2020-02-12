@@ -30,8 +30,8 @@ export class OrderService {
             const token = this.authService.getToken();
             const decoded = jwt_decode(token) as any;
             this.userId = decoded.subject;
-            if (this.authService.checkAdmin()) {
-                return this.httpClient.get<Order[]>(`${this.getRestaurantOrderUrl}/${this.userId}/orders`)
+            if (this.authService.isRestaurant()) {
+                return this.httpClient.get<Order[]>(`${this.getRestaurantOrderUrl}/orders`)
                 .pipe(
                     map(resData => {
                         const orders = [];

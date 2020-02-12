@@ -1,14 +1,14 @@
 <ion-tabs>
   <ion-tab-bar slot="bottom">
-    <ion-tab-button tab="discover">
+    <ion-tab-button tab="discover" *ngIf="!authService.checkAdmin() && !authService.isRestaurant()">
       <ion-label>Restaurants</ion-label>
       <ion-icon name="restaurant"></ion-icon>
     </ion-tab-button>
-    <ion-tab-button tab="restaurant">
+    <ion-tab-button tab="restaurant" *ngIf="authService.checkAdmin()">
       <ion-label>Restaurants</ion-label>
       <ion-icon name="paper"></ion-icon>
     </ion-tab-button>
-    <ion-tab-button tab="orders">
+    <ion-tab-button tab="orders" *ngIf="!authService.checkAdmin()">
       <ion-label>Orders</ion-label>
       <ion-icon name="paper"></ion-icon>
     </ion-tab-button>
