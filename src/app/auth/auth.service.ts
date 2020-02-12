@@ -48,7 +48,7 @@ export class AuthService {
   public checkAdmin(): boolean {
     if (this.loggedIn()) {
       this.token = this.getToken();
-      this.decoded = jwt_decode(this.token, {header: true});
+      this.decoded = jwt_decode(this.token);
       if (this.decoded.isAdmin === true ) {
         return true;
       }

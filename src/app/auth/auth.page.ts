@@ -121,8 +121,6 @@ export class AuthPage implements OnInit {
     if (this.isLogin) {
       form.reset();
       this.onLogin();
-      console.log(this.authService.isRestaurant());
-      console.log(this.authService.checkAdmin());
     } else {
       const username = form.value.username;
       const name = form.value.name;

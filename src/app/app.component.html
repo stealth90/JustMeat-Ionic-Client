@@ -8,13 +8,13 @@
     <ion-content>
       <ion-list>
         <ion-menu-toggle>
-          <ion-item lines="none" routerLink="/restaurants/tabs/discover">
+          <ion-item lines="none" routerLink="/restaurants/tabs/discover" *ngIf="!authService.checkAdmin() && !authService.isRestaurant()">
             <ion-icon name="business" slot="start"></ion-icon>
             <ion-label>Discover Restaurants</ion-label>
           </ion-item>
         </ion-menu-toggle>
         <ion-menu-toggle>
-          <ion-item lines="none" routerLink="/orders">
+          <ion-item lines="none" routerLink="/orders" *ngIf="!authService.checkAdmin()">
             <ion-icon name="checkbox-outline" slot="start"></ion-icon>
             <ion-label>Your Orders</ion-label>
           </ion-item>
