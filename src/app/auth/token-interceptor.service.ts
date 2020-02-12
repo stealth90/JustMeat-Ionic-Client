@@ -14,11 +14,13 @@ export class TokenInterceptorService implements HttpInterceptor {
   constructor(private authService: AuthService, private router: Router) { }
 
   intercept(req: HttpRequest<any> , next: HttpHandler): Observable<HttpEvent<any>> {
-    req = req.clone({
-      setHeaders: {
-        Authorization: this.authService.getToken()
-      }
-    });
+    if(!req.url.includes('/login')){
+      req = req.clone({
+        setHeaders: {
+          Authorization: this.authService.getToken()
+        }
+      });
+    }
     return next.handle(req)
       .pipe(
         tap( (event: HttpEvent<any>) => {
