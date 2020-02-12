@@ -29,7 +29,7 @@ export class OrdersPage implements OnInit, OnDestroy {
     });
   }
 
-  onCancelOrder(orderId: string, slidingEl: IonItemSliding){
+  onCancelOrder(orderId: string, slidingEl: IonItemSliding) {
     slidingEl.close();
   }
 

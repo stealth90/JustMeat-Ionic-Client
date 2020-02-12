@@ -28,7 +28,7 @@ export class CreateOrderComponent implements OnInit {
   getTotalAmount() {
     let totalAmount = 0;
     for (const item of this.plates) {
-      totalAmount += item.pricePlate;
+      totalAmount += item.price;
     }
     return totalAmount;
   }
@@ -39,7 +39,7 @@ export class CreateOrderComponent implements OnInit {
   onOrderPlate() {
     this.plates.forEach((plate) => {
       plate.quantity = this.plates.reduce((acc, item) => {
-        if (item.namePlate === plate.namePlate) {
+        if (item.name === plate.name) {
           return acc + 1;
         }
         return acc;
