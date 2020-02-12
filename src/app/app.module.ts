@@ -15,7 +15,7 @@ import { TokenInterceptorService } from './auth/token-interceptor.service';
 import { HomepageComponent } from './homepage/homepage.component';
 
 @NgModule({
-  declarations: [AppComponent,HomepageComponent],
+  declarations: [AppComponent, HomepageComponent],
   entryComponents: [],
   imports: [BrowserModule, IonicModule.forRoot(), AppRoutingModule, HttpClientModule],
   providers: [

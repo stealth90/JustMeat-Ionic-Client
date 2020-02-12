@@ -25,12 +25,12 @@ export class AppComponent {
       this.statusBar.styleDefault();
       this.splashScreen.hide();
       this.authService.authenticationState.subscribe( state => {
-        if (state) {
-          console.log("user is logged in");
-          this.navController.navigateRoot(['restaurants/tabs/discover']);
+        if (state || this.authService.loggedIn()) {
+          console.log('user is logged in');
+          return this.navController.navigateRoot(['restaurants/tabs/discover']);
         } else {
-          console.log("user is NOT logged in");
-          this.navController.navigateRoot('homepage');
+          console.log('user is NOT logged in');
+          return this.navController.navigateRoot('homepage');
         }
       });
 /*       if (this.authService.isNewUser) {

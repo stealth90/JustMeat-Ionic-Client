@@ -86,7 +86,7 @@ export class OrderService {
                 })
             );
     }
-    updateStatusOrder(orderId: string) {
+    updateStatusOrder(orderId: string, statusOrder: string) {
         let updatedOrders: Order[];
         return this.orders
         .pipe(
@@ -104,7 +104,7 @@ export class OrderService {
                     shippingAddress: oldOrder.shippingAddress,
                     orderItems : oldOrder.orderItems,
                     rating: oldOrder.rating,
-                    statusOrder: true
+                    statusOrder
                 };
                 return this.httpClient
                     .put(`${this.orderUrl}/${orderId}`,

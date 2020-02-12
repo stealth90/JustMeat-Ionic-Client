@@ -12,5 +12,5 @@ export interface Order {
     orderItems: Array<OrderList>;
     totalAmount: number;
     rating: number;
-    statusOrder: boolean;
+    statusOrder: string;
 }

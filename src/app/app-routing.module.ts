@@ -4,7 +4,7 @@ import { AuthGuard } from './auth/auth.guard';
 import { HomepageComponent } from './homepage/homepage.component';
 
 const routes: Routes = [
-  { path: '', redirectTo: 'restaurants/tabs/discover', pathMatch: 'full' },
+  { path: '', redirectTo: 'restaurants', pathMatch: 'full' },
   {
     path: 'auth',
     loadChildren: () => import('./auth/auth.module').then( m => m.AuthPageModule)
