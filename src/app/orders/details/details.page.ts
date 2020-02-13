@@ -3,7 +3,7 @@ import { Order } from '../order.model';
 import { ActivatedRoute } from '@angular/router';
 import { AuthService } from '../../auth/auth.service';
 import { OrderService } from '../order.service';
-import { LoadingController, NavController } from '@ionic/angular';
+import { LoadingController, NavController, ToastController } from '@ionic/angular';
 import { Subscription } from 'rxjs';
 
 @Component({
@@ -32,7 +32,8 @@ export class DetailsPage implements OnInit, OnDestroy {
     private route: ActivatedRoute,
     private orderService: OrderService,
     private navCtrl: NavController,
-    private loadingCtrl: LoadingController) { }
+    private loadingCtrl: LoadingController,
+    ) { }
 
   ngOnInit() {
     this.route.paramMap.subscribe(async paramMap => {
@@ -60,10 +61,10 @@ export class DetailsPage implements OnInit, OnDestroy {
       return this.statusList[index + 1];
     }
 
-      onStatusChange(status: string) {
-        this.loadingCtrl.create({
-          message: 'Updating status...'
-        }).then( loadingElm => {
+    onStatusChange(status: string) {
+      this.loadingCtrl.create({
+        message: 'Updating status...'
+      }).then( loadingElm => {
         loadingElm.present();
         this.orderService.updateStatusOrder(
           this.order._id,
@@ -73,7 +74,8 @@ export class DetailsPage implements OnInit, OnDestroy {
           this.navCtrl.navigateBack('/restaurants/tabs/orders');
         });
       });
-  }
+    }
+
   ngOnDestroy() {
     if (this.orderSub) {
       this.orderSub.unsubscribe();
