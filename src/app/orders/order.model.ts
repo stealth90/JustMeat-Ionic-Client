@@ -5,12 +5,11 @@ export interface OrderList {
 }
 export interface Order {
     _id: string;
-    userId: string;
-    restaurantId: string;
+    user: string;
+    restaurant: string;
     date: string;
     shippingAddress: string;
     orderItems: Array<OrderList>;
     totalAmount: number;
-    rating: number;
-    statusOrder: boolean;
+    statusOrder: string;
 }

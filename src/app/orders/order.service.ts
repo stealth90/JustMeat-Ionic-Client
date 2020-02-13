@@ -86,7 +86,7 @@ export class OrderService {
                 })
             );
     }
-    updateStatusOrder(orderId: string) {
+    updateStatusOrder(orderId: string, statusOrder: string) {
         let updatedOrders: Order[];
         return this.orders
         .pipe(
@@ -97,17 +97,16 @@ export class OrderService {
                 const oldOrder = updatedOrders[updatedOrderIndex];
                 updatedOrders[updatedOrderIndex] = {
                     _id: oldOrder._id,
-                    userId: oldOrder.userId,
-                    restaurantId: oldOrder.restaurantId,
+                    user: oldOrder.user,
+                    restaurant: oldOrder.restaurant,
                     totalAmount: oldOrder.totalAmount,
                     date: oldOrder.date,
                     shippingAddress: oldOrder.shippingAddress,
                     orderItems : oldOrder.orderItems,
-                    rating: oldOrder.rating,
-                    statusOrder: true
+                    statusOrder
                 };
                 return this.httpClient
-                    .put(`${this.orderUrl}/${orderId}`,
+                    .put(`${this.getRestaurantOrderUrl}/${orderId}/status`,
                     {...updatedOrders[updatedOrderIndex]}
                     );
             }),
@@ -127,13 +126,12 @@ export class OrderService {
                 const oldOrder = updatedOrders[updatedOrderIndex];
                 updatedOrders[updatedOrderIndex] = {
                     _id: oldOrder._id,
-                    userId: oldOrder.userId,
-                    restaurantId: oldOrder.restaurantId,
+                    user: oldOrder.user,
+                    restaurant: oldOrder.restaurant,
                     totalAmount: oldOrder.totalAmount,
                     date: oldOrder.date,
                     shippingAddress: oldOrder.shippingAddress,
                     orderItems : oldOrder.orderItems,
-                    rating,
                     statusOrder: oldOrder.statusOrder
                 };
                 return this.httpClient

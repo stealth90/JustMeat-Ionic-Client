@@ -15,7 +15,7 @@
           <ion-item-sliding *ngFor="let order of loadedOrders" #slidingOrder>
               <ion-item>
                 <ion-label>
-                  <h5>N° order: {{order._id}}</h5>
+                  <h5 (click)="onClickDetails(order._id)">N° order: {{order._id}}</h5>  
                   <p>Address: {{order.shippingAddress}}</p>
                   <p>Date: {{order.date | date: 'dd/MM/yyyy'}}</p>
                 </ion-label>
