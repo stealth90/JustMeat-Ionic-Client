@@ -56,6 +56,7 @@ export class AuthPage implements OnInit {
         .then( (alert) => {
           alert.present();
         });
+        this.authService.isNewUser = false;
         localStorage.setItem('token', res.token);
         this.router.navigate(['/auth']);
       },

@@ -37,7 +37,7 @@ export class RestaurantsService {
         map(resData => {
           const restaurants = [];
           resData.forEach(element => {
-            if(!element.avatar) {
+            if (!element.avatar) {
               element.avatar = this.getRandomImage();
             }
             restaurants.push(element);

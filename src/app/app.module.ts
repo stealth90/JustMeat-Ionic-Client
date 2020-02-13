@@ -12,9 +12,10 @@ import { HttpClientModule, HTTP_INTERCEPTORS} from '@angular/common/http';
 import { AuthGuard } from './auth/auth.guard';
 import { AuthService } from './auth/auth.service';
 import { TokenInterceptorService } from './auth/token-interceptor.service';
+import { HomepageComponent } from './homepage/homepage.component';
 
 @NgModule({
-  declarations: [AppComponent],
+  declarations: [AppComponent, HomepageComponent],
   entryComponents: [],
   imports: [BrowserModule, IonicModule.forRoot(), AppRoutingModule, HttpClientModule],
   providers: [
