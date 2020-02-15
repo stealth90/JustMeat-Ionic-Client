@@ -5,6 +5,7 @@ import { AuthService } from '../../auth/auth.service';
 import { OrderService } from '../order.service';
 import { LoadingController, NavController, ToastController } from '@ionic/angular';
 import { Subscription } from 'rxjs';
+import { Socket } from 'ngx-socket-io';
 
 @Component({
   selector: 'app-details',
@@ -33,9 +34,11 @@ export class DetailsPage implements OnInit, OnDestroy {
     private orderService: OrderService,
     private navCtrl: NavController,
     private loadingCtrl: LoadingController,
+    private socket: Socket
     ) { }
 
   ngOnInit() {
+    this.socket.connect();
     this.route.paramMap.subscribe(async paramMap => {
       if (!paramMap.has('orderId')) {
         this.navCtrl.navigateBack('/restaurants/tabs/orders');
@@ -80,6 +83,10 @@ export class DetailsPage implements OnInit, OnDestroy {
     if (this.orderSub) {
       this.orderSub.unsubscribe();
     }
+  }
+
+  ionViewWillLeave() {
+    this.socket.disconnect();
   }
 
 }
