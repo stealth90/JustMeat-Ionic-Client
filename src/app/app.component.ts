@@ -26,18 +26,11 @@ export class AppComponent {
       this.splashScreen.hide();
       this.authService.authenticationState.subscribe( state => {
         if (state || this.authService.loggedIn()) {
-          console.log('user is logged in');
           return this.navController.navigateRoot(['restaurants/tabs/discover']);
         } else {
-          console.log('user is NOT logged in');
           return this.navController.navigateRoot('homepage');
         }
       });
-/*       if (this.authService.isNewUser) {
-        this.router.navigateByUrl('/homepage');
-      } else {
-        this.router.navigateByUrl('/restaurant');
-      } */
     });
   }
 

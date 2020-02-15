@@ -5,6 +5,7 @@ import { Router } from '@angular/router';
 import { LoginRule } from './models/loginInterface.model';
 import { NewUser } from './models/userInterface.model';
 import { BehaviorSubject } from 'rxjs';
+import { FormGroup } from '@angular/forms';
 
 @Injectable({
   providedIn: 'root'
@@ -13,7 +14,7 @@ export class AuthService {
   authUrl = 'http://localhost:3006/users';
   token: string;
   isNewUser = true;
-  authenticationState = new BehaviorSubject(false);
+  authenticationState = new BehaviorSubject(true);
   decoded: object & { isAdmin: boolean, isRestaurant: boolean, restaurant: string };
   constructor(private httpClient: HttpClient, private router: Router) { }
 
@@ -65,5 +66,20 @@ export class AuthService {
       }
     }
     return false;
+  }
+  getUser(id: string) {
+    return this.httpClient.get<NewUser>(`${this.authUrl}?id=${id}`);
+  }
+  updateUser(username: string, userId: string, form: FormGroup) {
+    const updatedUser = {
+      _id : userId,
+      username,
+      name: form.value.name,
+      surname: form.value.surname,
+      address: form.value.address,
+      phone: form.value.phone,
+      email: form.value.email,
+    };
+    return this.httpClient.put(`${this.authUrl}/${username}`, updatedUser);
   }
 }

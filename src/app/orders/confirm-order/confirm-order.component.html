@@ -1,0 +1,98 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+        <ion-back-button defaultHref='/restaurants/tabs/discover/restaurants-detail'></ion-back-button>
+      <!-- <ion-button (click)="onOpenMenu()">Open</ion-button> -->
+    </ion-buttons>
+    <ion-title>
+      <ion-text>Basket</ion-text>
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-grid class="ion-no-padding" style="background-color: rgb(207, 207, 207);">
+    <ion-row class="ion-text-center ion-padding" style="height: 30vh;">
+      <ion-col class="ion-margin">
+        <ion-label>
+          <h3 style="display: inline;">Order total </h3>
+          <p style="display: inline;">({{getTotalOrderItems()}} Item)</p>
+          <h1 style="font-size: 30px; color: darkgreen; font-weight: 400;">{{getTotalPriceOrder() | currency:'EUR':'symbol-narrow':'1.2-2' }}</h1>
+        </ion-label>
+        <ion-button (click)="createOrder()" class="ion-margin" color="primary" expand="full">
+          Order Now
+        </ion-button>
+      </ion-col>
+    </ion-row>
+    <ion-row class="ion-padding">
+      <ion-col class="align-self-center" style="align-self: center;" size="1">
+        <ion-icon style="color: #d50525;"name="checkmark-circle-outline"></ion-icon>
+      </ion-col>
+      <ion-col>
+        <ion-label>
+          <a (click)="openModal()">
+            <p>Se hai un'allergia o un'intolleranza alimentare (o se una persona
+            per la quale stai effettuando un ordine ne ha), tocca qui.
+            </p>
+          </a>
+        </ion-label>
+      </ion-col>
+    </ion-row>
+    <ion-row class="ion-padding" style="justify-content: space-between;">
+      <ion-col>
+        <ion-label>
+          <h3>Order summary</h3>
+        </ion-label>
+      </ion-col>
+      <ion-col size="1">
+        <ion-label>
+          <a>
+            <h3>Edit</h3>
+          </a>
+        </ion-label>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+  <ion-grid class="ion-padding">
+    <ion-row class="ion-margin-bottom" *ngFor="let plate of myData" style="justify-content: space-between;">
+      <ion-col>
+        <ion-label>
+          <p>{{plate.quantity}} x {{plate.name}}</p>
+        </ion-label>
+      </ion-col>
+      <ion-col size="2">
+        <ion-label>
+          <p>{{plate.price | currency:'EUR':'symbol-narrow':'1.2-2'}}</p>
+        </ion-label>
+      </ion-col>
+    </ion-row>
+    <div style="height: 1px; border-top: 1px solid rgb(196, 192, 192);"></div>
+    <ion-row class="ion-margin-bottom">
+      <ion-col>
+        <ion-label>
+          <h4>Total</h4>
+        </ion-label>
+      </ion-col>
+      <ion-col size="2">
+        <ion-label>
+          <h4>{{getTotalPriceOrder() | currency:'EUR':'symbol-narrow':'1.2-2' }}</h4> 
+        </ion-label>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-label>
+        <p>La Deliziosa - Pizzera</p>
+      </ion-label>
+    </ion-row>
+    <ion-row>
+      <ion-label>
+        <p>Via Duca degli Abbruzzi, 18</p>
+      </ion-label>
+    </ion-row>
+    <ion-row>
+      <ion-label>
+        <p>Catania</p>
+      </ion-label>
+    </ion-row>
+  </ion-grid>
+</ion-content>

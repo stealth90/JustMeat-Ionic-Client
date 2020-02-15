@@ -6,9 +6,19 @@ import { AuthGuard } from '../auth/auth.guard';
 
 const routes: Routes = [
   {
+    path: '',
+    redirectTo: '/restaurants/tabs/discover',
+    pathMatch: 'full'
+  },
+  {
     path: 'tabs',
     component: RestaurantsPage,
     children: [
+      {
+        path: '',
+        redirectTo: '/restaurants/tabs/discover',
+        pathMatch: 'full'
+      },
       {
         path : 'discover',
         children: [
@@ -17,10 +27,14 @@ const routes: Routes = [
             loadChildren: () => import('./discover/discover.module').then( m => m.DiscoverPageModule)
           },
           {
-            path: ':restaurantId',
+            path: 'restaurants',
+            loadChildren: () => import ('./discover/restaurants-detail/restaurants-detail.module').then( m => m.RestaurantsDetailPageModule)
+          }
+          /* {
+            path: 'restaurant/:restaurantId',
             // tslint:disable-next-line: max-line-length
             loadChildren: () => import('./discover/restaurant-detail/restaurant-detail.module').then( m => m.RestaurantDetailPageModule)
-          }
+          } */
         ]
       },
       {
@@ -45,16 +59,10 @@ const routes: Routes = [
         loadChildren: () => import('../orders/orders.module').then( m => m.OrdersPageModule),
       },
       {
-        path: '',
-        redirectTo: '/restaurants/tabs/discover',
-        pathMatch: 'full'
+        path: 'profile',
+        loadChildren: () => import('../profile/profile.module').then(m => m.ProfilePageModule)
       }
     ]
-  },
-  {
-    path: '',
-    redirectTo: '/restaurants/tabs/discover',
-    pathMatch: 'full'
   }
 ];
 

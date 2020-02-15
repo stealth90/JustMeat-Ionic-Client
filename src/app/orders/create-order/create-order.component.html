@@ -1,10 +1,12 @@
 <ion-header>
   <ion-toolbar>
     <ion-title>{{selectedRestaurant.name}}</ion-title>
-    <ion-buttons slot="primary">
+    <ion-buttons slot="start">
       <ion-button (click)="onCancel()">
         <ion-icon name="close"></ion-icon>
       </ion-button>
+    </ion-buttons>
+    <ion-buttons slot="primary">
       <ion-button size="small" style="background-color: primary; border: 1px solid white;" [disabled]="plates.length === 0" (click)="onOrderPlate()">
         <ion-icon class="ion-margin-end" color="white" name="basket"></ion-icon>
         <ion-text> {{getTotalAmount()  | currency:'EUR':'symbol-narrow':'1.2-2'}}</ion-text>

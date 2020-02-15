@@ -49,6 +49,25 @@ export class RestaurantsService {
         })
       );
   }
+  fetchRestaurantsByCity(city: string) {
+    return this.httpClient
+      .get<Restaurant[]>(`${this.apiURL}?city=${city}`)
+      .pipe(
+        map(resData => {
+          const restaurants = [];
+          resData.forEach(element => {
+            if (!element.avatar) {
+              element.avatar = this.getRandomImage();
+            }
+            restaurants.push(element);
+          });
+          return restaurants;
+        }),
+        tap(restaurants => {
+          this._restaurants.next(restaurants);
+        })
+      );
+  }
 
   getRandomImage(): string {
     return this.restaurantsImage[Math.floor(Math.random() * this.restaurantsImage.length)];

@@ -24,7 +24,25 @@
 @import "~@ionic/angular/css/text-alignment.css";
 @import "~@ionic/angular/css/text-transformation.css";
 @import "~@ionic/angular/css/flex-utils.css";
+@import '~ngx-bar-rating/themes/br-fontawesome-theme';
 
 .ion-invalid.ion-touched ion-label{
     color: var(--ion-color-danger);
+}
+ion-searchbar{
+    .searchbar-input-container{
+        box-shadow: 0px 1px 5px 0px grey;
+        .searchbar-input{
+            border-radius: 0px !important;
+            background-color: white;
+        }
+    }
+}
+.setting-modal .modal-wrapper {
+    height: 40%;
+    width: 80%;
+    bottom: 30%;
+    position: absolute; 
+    display: block;  
+    border-radius: 10px;
 }

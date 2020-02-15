@@ -12,6 +12,6 @@ export interface Restaurant {
 
 export interface Plate {
     _id: string;
-    namePlate: string;
-    pricePlate: number;
+    name: string;
+    price: number;
 }

@@ -9,6 +9,8 @@ import { OrdersPageRoutingModule } from './orders-routing.module';
 import { OrdersPage } from './orders.page';
 import { TokenInterceptorService } from '../auth/token-interceptor.service';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
+import { ConfirmOrderComponent } from './confirm-order/confirm-order.component';
+import { AllergyComponent } from './allergy/allergy.component';
 
 @NgModule({
   imports: [
@@ -24,6 +26,7 @@ import { HTTP_INTERCEPTORS } from '@angular/common/http';
       multi: true
     }
   ],
-  declarations: [OrdersPage]
+  declarations: [OrdersPage, ConfirmOrderComponent, AllergyComponent],
+  entryComponents: [AllergyComponent]
 })
 export class OrdersPageModule {}

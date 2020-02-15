@@ -3,6 +3,7 @@ import { Restaurant } from '../../restaurants/restaurant.model';
 import { ModalController } from '@ionic/angular';
 import { Order, OrderList } from '../order.model';
 import { OrderService } from '../order.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-create-order',
@@ -13,7 +14,9 @@ export class CreateOrderComponent implements OnInit {
   @Input() selectedRestaurant: Restaurant;
   newOrder: Order;
   plates: OrderList[] = [];
-  constructor(private ordersService: OrderService, private modalCtrl: ModalController) { }
+  constructor(
+    private ordersService: OrderService,
+    private modalCtrl: ModalController) { }
 
   order: Order;
 
@@ -45,7 +48,10 @@ export class CreateOrderComponent implements OnInit {
         return acc;
       }, 0 );
     });
-    this.modalCtrl.dismiss({ orderingPlates: [...new Set(this.plates)]
+    this.modalCtrl.dismiss(
+      {
+        orderingPlates: [...new Set(this.plates)],
+        restId: this.selectedRestaurant._id
     }, 'confirm');
   }
 

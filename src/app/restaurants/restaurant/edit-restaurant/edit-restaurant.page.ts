@@ -42,11 +42,11 @@ export class EditRestaurantPage implements OnInit, OnDestroy {
           restaurant.plates.forEach(plate => {
             (this.platesRestaurant as FormArray)
             .push(new FormGroup(
-              {namePlate: new FormControl(plate.namePlate, {
+              {name: new FormControl(plate.name, {
                 updateOn: 'change',
                 validators: [Validators.required]
               }),
-              pricePlate: new FormControl(plate.pricePlate, {
+              price: new FormControl(plate.price, {
                 updateOn: 'change',
                 validators: [Validators.required, Validators.min(0.5)]
               })
@@ -93,11 +93,11 @@ export class EditRestaurantPage implements OnInit, OnDestroy {
 
   addPlate() {
     (this.form.controls.plates as FormArray).push(new FormGroup({
-      namePlate: new FormControl(null, {
+      name: new FormControl(null, {
         updateOn: 'change',
         validators: [Validators.required]
       }),
-      pricePlate: new FormControl(null, {
+      price: new FormControl(null, {
         updateOn: 'change',
         validators: [Validators.required, Validators.min(0.5)]
       })

@@ -25,8 +25,6 @@ export class RestaurantDetailPage implements OnInit, OnDestroy {
     private restaurantService: RestaurantsService,
     private modalCtrl: ModalController,
     private actionSheetCtrl: ActionSheetController,
-    private orderService: OrderService,
-    private loadingCtrl: LoadingController,
     private alertCtrl: AlertController,
     private router: Router) { }
 
@@ -60,8 +58,6 @@ export class RestaurantDetailPage implements OnInit, OnDestroy {
   }
 
   onOrderRestaurant() {
-    // this.router.navigateByUrl('/restaurants/tabs/discover');
-    // this.navCtrl.navigateBack('/restaurants/tabs/discover');
     this.actionSheetCtrl.create({
       header: 'Choose an Action',
       buttons: [
@@ -91,9 +87,8 @@ export class RestaurantDetailPage implements OnInit, OnDestroy {
         return modalEl.onDidDismiss();
       })
       .then(resultData => {
-        console.log(resultData.data, resultData.role);
         if (resultData.role === 'confirm') {
-          console.log('Ordered');
+          this.router.navigate(['restaurants/tabs/orders/confirmOrder'], {state: {plates: resultData.data.orderingPlates , restaurant: resultData.data.restId}});
         }
       });
   }

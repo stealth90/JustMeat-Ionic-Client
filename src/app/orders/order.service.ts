@@ -97,8 +97,8 @@ export class OrderService {
                 const oldOrder = updatedOrders[updatedOrderIndex];
                 updatedOrders[updatedOrderIndex] = {
                     _id: oldOrder._id,
-                    userId: oldOrder.userId,
-                    restaurantId: oldOrder.restaurantId,
+                    user: oldOrder.user,
+                    restaurant: oldOrder.restaurant,
                     totalAmount: oldOrder.totalAmount,
                     date: oldOrder.date,
                     shippingAddress: oldOrder.shippingAddress,
@@ -127,8 +127,8 @@ export class OrderService {
                 const oldOrder = updatedOrders[updatedOrderIndex];
                 updatedOrders[updatedOrderIndex] = {
                     _id: oldOrder._id,
-                    userId: oldOrder.userId,
-                    restaurantId: oldOrder.restaurantId,
+                    user: oldOrder.user,
+                    restaurant: oldOrder.restaurant,
                     totalAmount: oldOrder.totalAmount,
                     date: oldOrder.date,
                     shippingAddress: oldOrder.shippingAddress,
