@@ -1,8 +1,9 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { OrderService } from './order.service';
-import { Order } from './order.model';
+import { Order, OrderList } from './order.model';
 import { IonItemSliding } from '@ionic/angular';
 import { Subscription } from 'rxjs';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-orders',
@@ -11,10 +12,20 @@ import { Subscription } from 'rxjs';
 })
 export class OrdersPage implements OnInit, OnDestroy {
   loadedOrders: Order[] = [];
+  order: Order = {
+    _id: '',
+    user: '',
+    restaurant: '',
+    date: '',
+    shippingAddress: '',
+    orderItems: [],
+    totalAmount: 0,
+    statusOrder: ''
+  };
   private ordersSub: Subscription;
   isLoading = false;
 
-  constructor(private ordersService: OrderService) { }
+  constructor(private ordersService: OrderService, private router: Router) { }
 
   ngOnInit() {
     this.ordersSub = this.ordersService.orders.subscribe(orders => {
@@ -27,6 +38,10 @@ export class OrdersPage implements OnInit, OnDestroy {
     this.ordersService.fetchOrders().subscribe(() => {
       this.isLoading = false;
     });
+  }
+
+  onClickDetails(orderId: string) {
+    this.router.navigate(['/', 'restaurants', 'tabs', 'orders', 'details', orderId]);
   }
 
   onCancelOrder(orderId: string, slidingEl: IonItemSliding) {

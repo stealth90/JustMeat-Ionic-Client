@@ -11,6 +11,5 @@ export interface Order {
     shippingAddress: string;
     orderItems: Array<OrderList>;
     totalAmount: number;
-    rating: number;
     statusOrder: string;
 }

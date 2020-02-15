@@ -12,6 +12,10 @@ const routes: Routes = [
   {
     path: 'confirmOrder',
     component: ConfirmOrderComponent
+  },
+  {
+    path: 'details',
+    loadChildren: () => import('./details/details.module').then( m => m.DetailsPageModule)
   }
 ];
 

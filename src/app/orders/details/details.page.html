@@ -1,0 +1,38 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/restaurants/tabs/orders"></ion-back-button>
+    </ion-buttons>
+    <ion-title>Details</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-card>
+    <ion-card-header>
+      <ion-card-subtitle>Order N°: {{order._id}}</ion-card-subtitle>
+    </ion-card-header>
+    <ion-card-content >
+      <p>User: {{order.user}}</p>
+      <p>Restaurant: {{order.restaurant}}</p>
+      <p>Date: {{order.date}}</p>
+      <p>Shipping Address: {{order.shippingAddress}}</p>
+      <p>Ordered Plate: </p>
+      <span *ngFor="let item of order.orderItems">
+        <p>Quantity: {{item.quantity}}</p>
+        <p>Name: {{item.name}}</p>
+        <p>Price: {{item.price}}</p>
+      </span>
+      <p>Total Amount: {{order.totalAmount}}</p>
+      <p *ngIf="!authService.isRestaurant()">Status Order: {{order.statusOrder}}</p>
+      <br>
+      <span *ngIf="authService.isRestaurant()">
+        <p>Last status: {{order.statusOrder}}</p>
+        <div *ngIf="order.statusOrder !== 'DELIVERED'" >
+          <p>Update to</p>
+          <ion-button (click)= "onStatusChange(statusInformation(order.statusOrder))">{{statusInformation(order.statusOrder)}}</ion-button>
+        </div>
+      </span>
+    </ion-card-content>
+  </ion-card>
+</ion-content>

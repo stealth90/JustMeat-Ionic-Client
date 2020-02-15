@@ -56,7 +56,16 @@ const routes: Routes = [
       },
       {
         path: 'orders',
-        loadChildren: () => import('../orders/orders.module').then( m => m.OrdersPageModule),
+        children: [
+          {
+            path: '',
+            loadChildren: () => import('../orders/orders.module').then( m => m.OrdersPageModule),
+          },
+          {
+            path: 'details/:orderId',
+            loadChildren: () => import('../orders/details/details.module').then( m => m.DetailsPageModule)
+          }
+        ]
       },
       {
         path: 'profile',
