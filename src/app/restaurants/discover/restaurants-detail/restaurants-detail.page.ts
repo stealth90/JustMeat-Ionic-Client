@@ -3,7 +3,7 @@ import { MenuController } from '@ionic/angular';
 import { SegmentChangeEventDetail } from '@ionic/core';
 
 
-import { Subscription } from 'rxjs';
+import { Subscription} from 'rxjs';
 import { Restaurant } from '../../restaurant.model';
 import { RestaurantsService } from '../../restaurants.service';
 import { ActivatedRoute } from '@angular/router';
@@ -15,7 +15,8 @@ import { ActivatedRoute } from '@angular/router';
 })
 export class RestaurantsDetailPage implements OnInit, OnDestroy {
 
-  public loadedRestaurants: Restaurant[] = [];
+  public loadedRestaurants: Restaurant[];
+  public filteredRestaurants: Restaurant[];
   private restaurantsSub: Subscription;
   private city: string;
   isLoading = false;
@@ -28,6 +29,7 @@ export class RestaurantsDetailPage implements OnInit, OnDestroy {
   ngOnInit() {
     this.restaurantsSub = this.restaurantService.restaurants.subscribe(restaurants => {
       this.loadedRestaurants = [...restaurants];
+      this.filteredRestaurants = this.loadedRestaurants;
     });
   }
 
@@ -52,7 +54,11 @@ export class RestaurantsDetailPage implements OnInit, OnDestroy {
     this.menuCtrl.toggle();
   }
   OnFilterUpdate(event: CustomEvent<SegmentChangeEventDetail>) {
-    console.log(event.detail);
+    if (event.detail.value === 'pizzeria') {
+      this.filteredRestaurants = this.loadedRestaurants.filter( restaurant => restaurant.typology === 'Pizzeria');
+    } else {
+      this.filteredRestaurants = this.loadedRestaurants.filter( restaurant => restaurant.typology === 'Ristorante')
+    }
   }
 
   ngOnDestroy() {

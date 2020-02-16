@@ -14,7 +14,7 @@ export class AuthService {
   authUrl = 'https://just-meat-server.herokuapp.com/users';
   token: string;
   isNewUser = true;
-  authenticationState = new BehaviorSubject(true);
+  authenticationState = new BehaviorSubject(false);
   decoded: object & { isAdmin: boolean, isRestaurant: boolean, restaurant: string };
   constructor(private httpClient: HttpClient, private router: Router) { }
 

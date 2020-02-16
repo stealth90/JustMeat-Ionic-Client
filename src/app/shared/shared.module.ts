@@ -1,9 +1,12 @@
 import { NgModule } from '@angular/core';
 import { RatingComponent } from '../rating/rating.component';
+import { CommonModule } from '@angular/common';
+import { IonicModule } from '@ionic/angular';
 
 @NgModule({
     imports: [
-        RatingComponent
+        CommonModule,
+        IonicModule,
     ],
     declarations: [
         RatingComponent

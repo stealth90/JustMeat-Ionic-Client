@@ -19,7 +19,8 @@ import { RatingComponent } from '../rating/rating.component';
     CommonModule,
     FormsModule,
     IonicModule,
-    OrdersPageRoutingModule
+    OrdersPageRoutingModule,
+    SharedModule
   ],
   providers: [
     {

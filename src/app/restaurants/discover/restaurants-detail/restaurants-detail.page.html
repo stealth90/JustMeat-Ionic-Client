@@ -10,38 +10,45 @@
 </ion-header>
   
   <ion-content class="ion-padding">
-    <ion-segment (ionChange)="OnFilterUpdate($event)">
-      <ion-segment-button value="all" checked >
-        <ion-text>All Restaurants</ion-text>
+    <ion-segment (ionChange)="OnFilterUpdate($event)" value="pizzeria" color="primary">
+      <ion-segment-button value="pizzeria">
+        <ion-label>Pizzerias</ion-label>
       </ion-segment-button>
-      <ion-segment-button value="ordernable">
-        <ion-text>Ordenable Restaurants</ion-text>
+      <ion-segment-button value="restaurant">
+        <ion-label>Restaurants</ion-label>
       </ion-segment-button>
     </ion-segment>
     <div *ngIf="isLoading" class="ion-text-center">
       <ion-spinner color="primary"></ion-spinner>
     </div>
-    <ion-grid *ngIf="!isLoading && loadedRestaurants.length > 0">
+    <ion-grid *ngIf=" !filteredRestaurants || filteredRestaurants.length <= 0">
+      <ion-row>
+        <ion-col class="ion-text-center">
+          <p>There are no Restaurants typology right now, please come back later!</p>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+    <ion-grid *ngIf="!isLoading && filteredRestaurants.length > 0">
       <ion-row>
         <ion-col size="12" size-sm="8" offset-sm="2" class="ionic-text-center">
-            <ion-card *ngFor="let restaurant of loadedRestaurants" routerDirection="forward" [routerLink]="['/', 'restaurants', 'tabs','discover','restaurants-detail','restaurant-detail' , restaurant._id]">
-              <ion-img src="{{restaurant.avatar}}"></ion-img>
-              <ion-card-content>
-                <ion-grid>
-                  <ion-row>
-                    <ion-col size="2">
-                      <ion-icon name="trophy"></ion-icon>
-                    </ion-col>
-                    <ion-col size="10" class="ionic-text-start">
-                      <p>{{ restaurant.name}}</p>
-                      <p>{{ restaurant.typology}}</p>
-                      <app-rating [readOnly]="true" [rating]="restaurant.rating"></app-rating>
-                    </ion-col>
-                  </ion-row>
-                </ion-grid>
-                <p class="ionic-text-left">{{ restaurant.address | titlecase}}</p>
-              </ion-card-content>
-            </ion-card>
+          <ion-card *ngFor="let restaurant of filteredRestaurants" routerDirection="forward" [routerLink]="['/', 'restaurants', 'tabs','discover','restaurants-detail','restaurant-detail' , restaurant._id]">
+            <ion-img src="{{restaurant.avatar}}"></ion-img>
+            <ion-card-content>
+              <ion-grid>
+                <ion-row>
+                  <ion-col size="2">
+                    <ion-icon name="trophy"></ion-icon>
+                  </ion-col>
+                  <ion-col size="10" class="ionic-text-start">
+                    <p>{{ restaurant.name}}</p>
+                    <p>{{ restaurant.typology}}</p>
+                    <app-rating [readOnly]="true" [rating]="restaurant.rating"></app-rating>
+                  </ion-col>
+                </ion-row>
+              </ion-grid>
+              <p class="ionic-text-left">{{ restaurant.address | titlecase}}</p>
+            </ion-card-content>
+          </ion-card>
         </ion-col>
       </ion-row>
     </ion-grid>

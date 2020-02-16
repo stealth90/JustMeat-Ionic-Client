@@ -16,8 +16,8 @@ import { SharedModule } from 'src/app/shared/shared.module';
     FormsModule,
     IonicModule,
     DetailsPageRoutingModule,
+    SharedModule
   ],
-  declarations: [DetailsPage, RatingComponent],
-  entryComponents: [RatingComponent]
+  declarations: [DetailsPage],
 })
 export class DetailsPageModule {}

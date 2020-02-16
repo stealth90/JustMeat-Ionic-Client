@@ -17,20 +17,29 @@ export class AppComponent {
     private splashScreen: SplashScreen,
     private statusBar: StatusBar,
     private authService: AuthService,
-    private navController: NavController  ) {
+    private navController: NavController) {
     this.initializeApp();
   }
   initializeApp() {
     this.platform.ready().then(() => {
       this.statusBar.styleDefault();
       this.splashScreen.hide();
-      this.authService.authenticationState.subscribe( state => {
-        if (state || this.authService.loggedIn()) {
+      // tslint:disable-next-line: no-string-literal
+      if (localStorage.getItem['firstTimeLoad'] !== 'TRUE') {
+          // tslint:disable-next-line: no-string-literal
+          localStorage.setItem['firstTimeLoad'] = 'TRUE';
+          this.navController.navigateRoot('homepage');
+      }
+      else{
+        return this.navController.navigateRoot(['restaurants/tabs/discover']);
+      }
+      /* this.authService.authenticationState.subscribe( state => {
+        if (!state || this.authService.loggedIn()) {
           return this.navController.navigateRoot(['restaurants/tabs/discover']);
         } else {
           return this.navController.navigateRoot('homepage');
         }
-      });
+      }); */
     });
   }
 

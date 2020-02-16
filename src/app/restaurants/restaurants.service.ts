@@ -105,12 +105,14 @@ export class RestaurantsService {
           return this.restaurants;
         }),
         take(1),
-        delay(1000),
         tap(restaurants => {
           newRestaurant._id = generatedId;
           this._restaurants.next(restaurants.concat(newRestaurant));
         })
       );
+  }
+  updateRestaurantRating(restaurantId: string) {
+    return this.httpClient.get(`${this.apiURL}/${restaurantId}/rating`);
   }
 
   updateRestaurant(restaurantId: string, form: FormGroup , plates: FormArray) {

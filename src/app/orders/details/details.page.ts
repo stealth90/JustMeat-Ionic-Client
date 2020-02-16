@@ -94,15 +94,17 @@ export class DetailsPage implements OnInit, OnDestroy {
     }
   }
 
-  submitRating(id: string, rating: number){
+  submitRating(id: string, restaurantId: string, rating: number){
     this.loadingCtrl.create({
       message: 'Update rating...'
     }).then(async loadingElm => {
       loadingElm.present();
       this.orderService.updateRatingOrder(id, rating).subscribe(() => {
+        this.restaurantsService.updateRestaurantRating(restaurantId).subscribe(() => {
           loadingElm.dismiss();
           this.router.navigate(['/restaurants/tabs/discover']);
-        });
+        })
+      });
     });
   }
 
