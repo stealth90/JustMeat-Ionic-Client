@@ -31,9 +31,12 @@
         <app-rating [readOnly]="true" [rating]="order.rating"></app-rating>
       </ion-col>
     </ion-row>
-    <ion-row class="ion-padding" *ngIf="order.statusOrder === 'DELIVERED' && order.rating === 0">
-      <ion-col class="ion-text-center">
+    <ion-row class="ion-padding " *ngIf="order.statusOrder === 'DELIVERED' && order.rating === 0">
+      <ion-col size="12" class="ion-text-center ion-margin-bottom">
           <app-rating (ratingChange)="rating = $event"></app-rating>
+      </ion-col>
+      <ion-col>
+        <ion-button [disabled]="rating === 0" (click)="submitRating(order._id, rating)" expand="block" color="primary">Set rating</ion-button>
       </ion-col>
     </ion-row>
     <ion-row class="ion-padding">

@@ -1,6 +1,6 @@
 import {OnInit, OnDestroy, Component } from '@angular/core';
 import { Order } from '../order.model';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { AuthService } from '../../auth/auth.service';
 import { OrderService } from '../order.service';
 import { LoadingController, NavController} from '@ionic/angular';
@@ -31,7 +31,8 @@ export class DetailsPage implements OnInit, OnDestroy {
     private navCtrl: NavController,
     private loadingCtrl: LoadingController,
     private restaurantsService: RestaurantsService,
-    private socket: Socket
+    private socket: Socket,
+    private router: Router
     ) { }
 
   ngOnInit() {
@@ -53,43 +54,58 @@ export class DetailsPage implements OnInit, OnDestroy {
         });
       });
     this.socket.emit('set-name', this.order);
-    }
+  }
 
-    statusInformation(status: string) {
-      let index: number ;
-      this.statusList.find((stat: string, i: number) => {
-        if (status === stat) {
-          index = i;
-          return status === stat;
-        }
+  statusInformation(status: string) {
+    let index: number ;
+    this.statusList.find((stat: string, i: number) => {
+      if (status === stat) {
+        index = i;
+        return status === stat;
+      }
+    });
+    return this.statusList[index + 1];
+  }
+
+  onStatusChange(status: string) {
+    this.loadingCtrl.create({
+      message: 'Updating status...'
+    }).then( loadingElm => {
+      loadingElm.present();
+      this.orderService.updateStatusOrder(
+        this.order._id,
+        status
+      ).subscribe(() => {
+        loadingElm.dismiss();
+        this.navCtrl.navigateBack('/restaurants/tabs/orders');
       });
-      return this.statusList[index + 1];
-    }
+    });
+  }
 
-    onStatusChange(status: string) {
-      this.loadingCtrl.create({
-        message: 'Updating status...'
-      }).then( loadingElm => {
-        loadingElm.present();
-        this.orderService.updateStatusOrder(
-          this.order._id,
-          status
-        ).subscribe(() => {
+  getRestaurantName(id: string) {
+    for (const rest of this.loadedRestaurant) {
+      if (rest._id === id) { return rest.name; }
+    }
+  }
+
+  getRestaurantAvatar(id: string) {
+    for (const rest of this.loadedRestaurant) {
+      if (rest._id === id) {return rest.avatar; }
+    }
+  }
+
+  submitRating(id: string, rating: number){
+    this.loadingCtrl.create({
+      message: 'Update rating...'
+    }).then(async loadingElm => {
+      loadingElm.present();
+      this.orderService.updateRatingOrder(id, rating).subscribe(() => {
           loadingElm.dismiss();
-          this.navCtrl.navigateBack('/restaurants/tabs/orders');
+          this.router.navigate(['/restaurants/tabs/discover']);
         });
-      });
-    }
-    getRestaurantName(id: string) {
-      for (const rest of this.loadedRestaurant) {
-        if (rest._id === id) { return rest.name; }
-      }
-    }
-    getRestaurantAvatar(id: string) {
-      for (const rest of this.loadedRestaurant) {
-        if (rest._id === id) {return rest.avatar; }
-      }
-    }
+    });
+  }
+
 
   ngOnDestroy() {
     if (this.orderSub) {

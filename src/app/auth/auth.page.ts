@@ -78,22 +78,17 @@ export class AuthPage implements OnInit {
   }
 
   onLogin() {
-    this.isLoading = true;
-    this.authService.loginUser(this.loginDetails).subscribe(
-      res => {
-        this.loadingCtrl.create({keyboardClose: true, message: 'Loggin in...'})
-        .then(loadingEl => {
-          loadingEl.present();
-          setTimeout(() => {
-            this.isLoading = false;
-            loadingEl.dismiss();
-          }, 1000);
-        });
+    this.loadingCtrl.create(
+      {keyboardClose: true, message: 'Loggin in...'}
+    ).then( async loadingElm => {
+      loadingElm.present();
+      this.authService.loginUser(this.loginDetails)
+      .subscribe(res => {
         localStorage.setItem('token', res.token);
         this.router.navigateByUrl(this.returnUrl);
-      },
-      // tslint:disable-next-line: variable-name
-      _err => {
+        loadingElm.dismiss();
+      }, _err => {
+        loadingElm.dismiss();
         this.alert.create({
           message: 'Invalid login details',
           buttons: [{
@@ -105,9 +100,9 @@ export class AuthPage implements OnInit {
         .then( (alert) => {
           alert.present();
         });
-      }
-    );
-  }
+      });
+    });
+    }
   onSubmit(form: NgForm) {
     if (!form.valid) {
       return;

@@ -134,10 +134,10 @@ export class OrderService {
                     shippingAddress: oldOrder.shippingAddress,
                     orderItems : oldOrder.orderItems,
                     statusOrder: oldOrder.statusOrder,
-                    rating: oldOrder.rating
+                    rating
                 };
                 return this.httpClient
-                    .put(`${this.orderUrl}/${orderId}`,
+                    .put(`${this.orderUrl}/${orderId}/rating`,
                     {...updatedOrders[updatedOrderIndex]}
                     );
             }),
