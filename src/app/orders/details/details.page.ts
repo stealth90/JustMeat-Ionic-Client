@@ -21,7 +21,8 @@ export class DetailsPage implements OnInit, OnDestroy {
     shippingAddress: '',
     orderItems: [],
     totalAmount: 0,
-    statusOrder: ''
+    statusOrder: '',
+    rating: 0
   };
   statusList: Array<string> = ['NEW', 'ACCEPTED', 'SHIPPED', 'DELIVERED'];
   orderId: string;
@@ -38,7 +39,7 @@ export class DetailsPage implements OnInit, OnDestroy {
     ) { }
 
   ngOnInit() {
-    this.socket.connect();
+    // this.socket.connect();
     this.route.paramMap.subscribe(async paramMap => {
       if (!paramMap.has('orderId')) {
         this.navCtrl.navigateBack('/restaurants/tabs/orders');
@@ -86,8 +87,8 @@ export class DetailsPage implements OnInit, OnDestroy {
     }
   }
 
-  ionViewWillLeave() {
-    this.socket.disconnect();
-  }
+  // ionViewWillLeave() {
+  //   this.socket.disconnect();
+  // }
 
 }

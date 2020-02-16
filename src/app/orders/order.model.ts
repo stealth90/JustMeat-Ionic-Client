@@ -12,4 +12,5 @@ export interface Order {
     orderItems: Array<OrderList>;
     totalAmount: number;
     statusOrder: string;
+    rating: number;
 }

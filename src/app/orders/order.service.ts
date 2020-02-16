@@ -103,7 +103,8 @@ export class OrderService {
                     date: oldOrder.date,
                     shippingAddress: oldOrder.shippingAddress,
                     orderItems : oldOrder.orderItems,
-                    statusOrder
+                    statusOrder,
+                    rating: oldOrder.rating
                 };
                 return this.httpClient
                     .put(`${this.getRestaurantOrderUrl}/${orderId}/status`,
@@ -132,7 +133,8 @@ export class OrderService {
                     date: oldOrder.date,
                     shippingAddress: oldOrder.shippingAddress,
                     orderItems : oldOrder.orderItems,
-                    statusOrder: oldOrder.statusOrder
+                    statusOrder: oldOrder.statusOrder,
+                    rating: oldOrder.rating
                 };
                 return this.httpClient
                     .put(`${this.orderUrl}/${orderId}`,

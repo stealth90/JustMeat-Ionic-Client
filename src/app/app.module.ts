@@ -16,12 +16,12 @@ import { AuthService } from './auth/auth.service';
 import { TokenInterceptorService } from './auth/token-interceptor.service';
 
 import { SocketIoModule, SocketIoConfig } from 'ngx-socket-io';
-const config: SocketIoConfig = { url: 'https://just-meat-server.herokuapp.com', options: {} };
+// const config: SocketIoConfig = { url: 'https://just-meat-server.herokuapp.com', options: {} };
 
 @NgModule({
   declarations: [AppComponent, HomepageComponent],
   entryComponents: [],
-  imports: [BrowserModule, IonicModule.forRoot(), AppRoutingModule, HttpClientModule, SocketIoModule.forRoot(config)],
+  imports: [BrowserModule, IonicModule.forRoot(), AppRoutingModule, HttpClientModule/*, SocketIoModule.forRoot(config)*/],
   providers: [
     AuthGuard,
     AuthService,

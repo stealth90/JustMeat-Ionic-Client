@@ -20,7 +20,8 @@ export class OrdersPage implements OnInit, OnDestroy {
     shippingAddress: '',
     orderItems: [],
     totalAmount: 0,
-    statusOrder: ''
+    statusOrder: '',
+    rating: 0
   };
   private ordersSub: Subscription;
   isLoading = false;

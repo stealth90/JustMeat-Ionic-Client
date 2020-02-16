@@ -24,6 +24,7 @@
         <p>Price: {{item.price}}</p>
       </span>
       <p>Total Amount: {{order.totalAmount}}</p>
+      <p>Rating: {{order.rating}}</p>
       <p *ngIf="!authService.isRestaurant()">Status Order: {{order.statusOrder}}</p>
       <br>
       <span *ngIf="authService.isRestaurant()">
