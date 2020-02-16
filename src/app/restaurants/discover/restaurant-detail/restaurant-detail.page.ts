@@ -88,6 +88,7 @@ export class RestaurantDetailPage implements OnInit, OnDestroy {
       })
       .then(resultData => {
         if (resultData.role === 'confirm') {
+          // tslint:disable-next-line: max-line-length
           this.router.navigate(['restaurants/tabs/orders/confirmOrder'], {state: {plates: resultData.data.orderingPlates , restaurant: resultData.data.restId}});
         }
       });

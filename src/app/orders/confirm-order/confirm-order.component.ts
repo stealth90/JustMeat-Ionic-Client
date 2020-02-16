@@ -39,7 +39,7 @@ export class ConfirmOrderComponent implements OnInit, OnDestroy {
     this.token = this.authService.getToken();
     this.decoded = jwt_decode(this.token);
     this.userId = this.decoded.subject;
-    this.userSub =  this.authService.getUser(this.userId)
+    this.userSub = this.authService.getUser(this.userId)
       .subscribe( user => {
         this.user = user;
       });
@@ -68,7 +68,6 @@ export class ConfirmOrderComponent implements OnInit, OnDestroy {
       backdropDismiss: false,
       showBackdrop: true
     });
-
     modal.onDidDismiss().then(() => {
       });
     return await modal.present();

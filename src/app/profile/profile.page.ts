@@ -77,12 +77,12 @@ export class ProfilePage implements OnInit, OnDestroy {
           loadingElm.dismiss();
           this.form.reset();
           this.router.navigate(['/restaurants/tabs/discover']);
-        })
+        });
     });
   }
 
   ngOnDestroy() {
-    if (this.userSub){
+    if (this.userSub) {
       this.userSub.unsubscribe();
     }
   }
