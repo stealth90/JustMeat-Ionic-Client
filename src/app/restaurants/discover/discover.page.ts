@@ -13,7 +13,7 @@ import { Router } from '@angular/router';
   styleUrls: ['./discover.page.scss'],
 })
 export class DiscoverPage implements OnInit, OnDestroy {
-  citySearched: string ="";
+  citySearched = '';
   slideOpts = {
     slidesPerView: 1,
     coverflowEffect: {
@@ -26,10 +26,8 @@ export class DiscoverPage implements OnInit, OnDestroy {
     on: {
       beforeInit() {
         const swiper = this;
-  
         swiper.classNames.push(`${swiper.params.containerModifierClass}coverflow`);
         swiper.classNames.push(`${swiper.params.containerModifierClass}3d`);
-  
         swiper.params.watchSlidesProgress = true;
         swiper.originalParams.watchSlidesProgress = true;
       },
@@ -50,25 +48,21 @@ export class DiscoverPage implements OnInit, OnDestroy {
           const slideSize = slidesSizesGrid[i];
           const slideOffset = $slideEl[0].swiperSlideOffset;
           const offsetMultiplier = ((center - slideOffset - (slideSize / 2)) / slideSize) * params.modifier;
-  
-           let rotateY = isHorizontal ? rotate * offsetMultiplier : 0;
+          let rotateY = isHorizontal ? rotate * offsetMultiplier : 0;
           let rotateX = isHorizontal ? 0 : rotate * offsetMultiplier;
           // var rotateZ = 0
           let translateZ = -translate * Math.abs(offsetMultiplier);
-  
-           let translateY = isHorizontal ? 0 : params.stretch * (offsetMultiplier);
+          let translateY = isHorizontal ? 0 : params.stretch * (offsetMultiplier);
           let translateX = isHorizontal ? params.stretch * (offsetMultiplier) : 0;
-  
            // Fix for ultra small values
-          if (Math.abs(translateX) < 0.001) translateX = 0;
-          if (Math.abs(translateY) < 0.001) translateY = 0;
-          if (Math.abs(translateZ) < 0.001) translateZ = 0;
-          if (Math.abs(rotateY) < 0.001) rotateY = 0;
-          if (Math.abs(rotateX) < 0.001) rotateX = 0;
-  
-           const slideTransform = `translate3d(${translateX}px,${translateY}px,${translateZ}px)  rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
-  
-           $slideEl.transform(slideTransform);
+          if (Math.abs(translateX) < 0.001) { translateX = 0; }
+          if (Math.abs(translateY) < 0.001) {translateY = 0; }
+          if (Math.abs(translateZ) < 0.001) {translateZ = 0; }
+          if (Math.abs(rotateY) < 0.001) {rotateY = 0; }
+          if (Math.abs(rotateX) < 0.001) {rotateX = 0; }
+          // tslint:disable-next-line: max-line-length
+          const slideTransform = `translate3d(${translateX}px,${translateY}px,${translateZ}px)  rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
+          $slideEl.transform(slideTransform);
           $slideEl[0].style.zIndex = -Math.abs(Math.round(offsetMultiplier)) + 1;
           if (params.slideShadows) {
             // Set shadows
@@ -82,11 +76,10 @@ export class DiscoverPage implements OnInit, OnDestroy {
               $shadowAfterEl = swiper.$(`<div class="swiper-slide-shadow-${isHorizontal ? 'right' : 'bottom'}"></div>`);
               $slideEl.append($shadowAfterEl);
             }
-            if ($shadowBeforeEl.length) $shadowBeforeEl[0].style.opacity = offsetMultiplier > 0 ? offsetMultiplier : 0;
-            if ($shadowAfterEl.length) $shadowAfterEl[0].style.opacity = (-offsetMultiplier) > 0 ? -offsetMultiplier : 0;
+            if ($shadowBeforeEl.length) {$shadowBeforeEl[0].style.opacity = offsetMultiplier > 0 ? offsetMultiplier : 0; }
+            if ($shadowAfterEl.length) {$shadowAfterEl[0].style.opacity = (-offsetMultiplier) > 0 ? -offsetMultiplier : 0; }
           }
         }
-  
          // Set correct perspective for IE10
         if (swiper.support.pointerEvents || swiper.support.prefixedPointerEvents) {
           const ws = $wrapperEl[0].style;
@@ -101,7 +94,7 @@ export class DiscoverPage implements OnInit, OnDestroy {
           .transition(duration);
       }
     }
-  }
+  };
   public loadedOrders: Order[] = [];
   public loadedRestaurant: Restaurant[] = [];
   private ordersSub: Subscription;
@@ -157,7 +150,7 @@ export class DiscoverPage implements OnInit, OnDestroy {
   getPlates(id: string) {
     let plates = '';
     for (const order of this.loadedOrders) {
-      if( order._id === id) {
+      if ( order._id === id) {
         for (const plate of order.orderItems) {
           plates += `${plate.quantity} x ${plate.name},`;
         }
