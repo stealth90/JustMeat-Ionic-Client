@@ -8,7 +8,7 @@ import { RestaurantsDetailPageRoutingModule } from './restaurants-detail-routing
 
 import { RestaurantsDetailPage } from './restaurants-detail.page';
 import { BarRatingModule } from 'ngx-bar-rating';
-import { RatingComponent } from 'src/app/rating/rating.component';
+import { SharedModule } from 'src/app/shared/shared.module';
 
 @NgModule({
   imports: [
@@ -16,8 +16,9 @@ import { RatingComponent } from 'src/app/rating/rating.component';
     FormsModule,
     IonicModule,
     RestaurantsDetailPageRoutingModule,
-    BarRatingModule
+    BarRatingModule,
+    SharedModule
   ],
-  declarations: [RestaurantsDetailPage, RatingComponent]
+  declarations: [RestaurantsDetailPage]
 })
 export class RestaurantsDetailPageModule {}

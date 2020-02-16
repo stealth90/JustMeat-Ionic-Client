@@ -13,6 +13,6 @@ import { RestaurantsPage } from './restaurants.page';
     IonicModule,
     RestaurantsPageRoutingModule
   ],
-  declarations: [RestaurantsPage]
+  declarations: [RestaurantsPage],
 })
 export class RestaurantsPageModule {}

@@ -11,6 +11,8 @@ import { TokenInterceptorService } from '../auth/token-interceptor.service';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { ConfirmOrderComponent } from './confirm-order/confirm-order.component';
 import { AllergyComponent } from './allergy/allergy.component';
+import { SharedModule } from '../shared/shared.module';
+import { RatingComponent } from '../rating/rating.component';
 
 @NgModule({
   imports: [

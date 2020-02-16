@@ -99,7 +99,6 @@ export class DiscoverPage implements OnInit, OnDestroy {
   public loadedRestaurant: Restaurant[] = [];
   private ordersSub: Subscription;
   private restaurantsSub: Subscription;
-  isLoading = false;
   isLoading2 = false;
 
   constructor(
@@ -115,20 +114,18 @@ export class DiscoverPage implements OnInit, OnDestroy {
       this.loadedRestaurant = [...restaurants];
       this.ordersSub = this.orderService.orders.subscribe(orders => {
         this.loadedOrders = [...orders];
-        this.isLoading2 = false;
       });
+      this.isLoading2 = false;
     });
   }
 
   ionViewWillEnter() {
-    this.isLoading = true;
+    this.isLoading2 = true;
     this.restaurantService.fetchRestaurants().subscribe(() => {
-      this.isLoading2 = true;
       this.orderService.fetchOrders().subscribe(() => {
-        this.isLoading2 = false;
       });
-      this.isLoading = false;
     });
+    this.isLoading2 = false;
   }
 
 
