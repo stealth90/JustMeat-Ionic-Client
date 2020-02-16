@@ -14,23 +14,8 @@ import { AuthService } from '../auth/auth.service';
   styleUrls: ['./orders.page.scss'],
 })
 export class OrdersPage implements OnInit, OnDestroy {
-<<<<<<< HEAD
   public loadedOrders: Order[] = [];
   public loadedRestaurant: Restaurant[] = [];
-=======
-  loadedOrders: Order[] = [];
-  order: Order = {
-    _id: '',
-    user: '',
-    restaurant: '',
-    date: '',
-    shippingAddress: '',
-    orderItems: [],
-    totalAmount: 0,
-    statusOrder: '',
-    rating: 0
-  };
->>>>>>> 2d96c525b9ff2661e3c9812806177375793e5c42
   private ordersSub: Subscription;
   private restaurantsSub: Subscription;
   order: Order = {};
