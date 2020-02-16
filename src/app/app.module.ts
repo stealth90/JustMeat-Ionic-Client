@@ -16,7 +16,7 @@ import { AuthService } from './auth/auth.service';
 import { TokenInterceptorService } from './auth/token-interceptor.service';
 
 import { SocketIoModule, SocketIoConfig } from 'ngx-socket-io';
-const config: SocketIoConfig = { url: 'http://localhost:3006', options: {} };
+const config: SocketIoConfig = { url: 'https://just-meat-server.herokuapp.com', options: {} };
 
 @NgModule({
   declarations: [AppComponent, HomepageComponent],

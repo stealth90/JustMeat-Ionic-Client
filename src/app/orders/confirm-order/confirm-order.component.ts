@@ -39,7 +39,7 @@ export class ConfirmOrderComponent implements OnInit, OnDestroy {
     this.token = this.authService.getToken();
     this.decoded = jwt_decode(this.token);
     this.userId = this.decoded.subject;
-    this.userSub=  this.authService.getUser(this.userId)
+    this.userSub =  this.authService.getUser(this.userId)
       .subscribe( user => {
         this.user = user;
       });
@@ -57,7 +57,7 @@ export class ConfirmOrderComponent implements OnInit, OnDestroy {
     let price = 0;
     this.myData.forEach( plate => {
       price += (plate.price * plate.quantity);
-    })
+    });
     return price;
   }
 
@@ -68,12 +68,12 @@ export class ConfirmOrderComponent implements OnInit, OnDestroy {
       backdropDismiss: false,
       showBackdrop: true
     });
- 
+
     modal.onDidDismiss().then(() => {
       });
     return await modal.present();
     }
-    createOrder(){
+    createOrder() {
       this.loaderCtrl.create({
         message: 'Creating order...'
       }).then(async loadingElm => {
@@ -84,7 +84,6 @@ export class ConfirmOrderComponent implements OnInit, OnDestroy {
           shippingAddress: this.user.address,
           orderItems: this.myData,
           totalAmount: this.getTotalPriceOrder(),
-          rating: null,
           statusOrder: 'NEW'
         };
         this.orderService

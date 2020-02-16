@@ -51,6 +51,7 @@ export class DetailsPage implements OnInit, OnDestroy {
           this.order = order;
         });
       });
+    this.socket.emit('set-name', this.order);
     }
 
     statusInformation(status: string) {
