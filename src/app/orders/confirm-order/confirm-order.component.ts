@@ -83,7 +83,8 @@ export class ConfirmOrderComponent implements OnInit, OnDestroy {
           shippingAddress: this.user.address,
           orderItems: this.myData,
           totalAmount: this.getTotalPriceOrder(),
-          statusOrder: 'NEW'
+          statusOrder: 'NEW',
+          rating: 0
         };
         this.orderService
           .createOrder(

@@ -26,7 +26,7 @@ export class RestaurantsService {
     'https://just-eat-prod-eu-res.cloudinary.com/image/upload/c_fill,d_it:cuisines:pizza-3.jpg,f_auto,h_161,q_auto,w_436/v1/it/restaurants/219323'
   ];
 
-  private apiURL = 'http://localhost:3006/restaurants';
+  private apiURL = 'https://just-meat-server.herokuapp.com/restaurants';
 
   constructor(private httpClient: HttpClient, private authService: AuthService) {}
 

@@ -15,10 +15,24 @@ import { RestaurantsService } from 'src/app/restaurants/restaurants.service';
   styleUrls: ['./details.page.scss'],
 })
 export class DetailsPage implements OnInit, OnDestroy {
+<<<<<<< HEAD
   public order: Order;
   public loadedRestaurant: Restaurant [] = [];
   private orderSub: Subscription;
   private restaurantSub: Subscription;
+=======
+  order: Order = {
+    _id: '',
+    user: '',
+    restaurant: '',
+    date: '',
+    shippingAddress: '',
+    orderItems: [],
+    totalAmount: 0,
+    statusOrder: '',
+    rating: 0
+  };
+>>>>>>> 2d96c525b9ff2661e3c9812806177375793e5c42
   statusList: Array<string> = ['NEW', 'ACCEPTED', 'SHIPPED', 'DELIVERED'];
   orderId: string;
   isLoading = false;
@@ -52,6 +66,7 @@ export class DetailsPage implements OnInit, OnDestroy {
           });
         });
       });
+    this.socket.emit('set-name', this.order);
     }
 
     statusInformation(status: string) {

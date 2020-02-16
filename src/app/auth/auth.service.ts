@@ -11,7 +11,7 @@ import { FormGroup } from '@angular/forms';
   providedIn: 'root'
 })
 export class AuthService {
-  authUrl = 'http://localhost:3006/users';
+  authUrl = 'https://just-meat-server.herokuapp.com/users';
   token: string;
   isNewUser = true;
   authenticationState = new BehaviorSubject(true);

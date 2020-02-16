@@ -11,9 +11,9 @@ import * as jwt_decode from 'jwt-decode';
 export class OrderService {
     newOrder: Order ;
     userId: string;
-    private orderUrl = 'http://localhost:3006/orders';
-    private getUserOrderUrl = 'http://localhost:3006/users';
-    private getRestaurantOrderUrl = 'http://localhost:3006/restaurants';
+    private orderUrl = 'https://just-meat-server.herokuapp.com/orders';
+    private getUserOrderUrl = 'https://just-meat-server.herokuapp.com/users';
+    private getRestaurantOrderUrl = 'https://just-meat-server.herokuapp.com/restaurants';
     // tslint:disable-next-line: variable-name
     private _orders = new BehaviorSubject<Order[]>([]);
 
@@ -103,7 +103,8 @@ export class OrderService {
                     date: oldOrder.date,
                     shippingAddress: oldOrder.shippingAddress,
                     orderItems : oldOrder.orderItems,
-                    statusOrder
+                    statusOrder,
+                    rating: oldOrder.rating
                 };
                 return this.httpClient
                     .put(`${this.getRestaurantOrderUrl}/${orderId}/status`,
@@ -132,7 +133,8 @@ export class OrderService {
                     date: oldOrder.date,
                     shippingAddress: oldOrder.shippingAddress,
                     orderItems : oldOrder.orderItems,
-                    statusOrder: oldOrder.statusOrder
+                    statusOrder: oldOrder.statusOrder,
+                    rating: oldOrder.rating
                 };
                 return this.httpClient
                     .put(`${this.orderUrl}/${orderId}`,
