@@ -50,11 +50,6 @@ export class DetailsPage implements OnInit, OnDestroy {
           this.order = order;
           this.restaurantSub = this.restaurantsService.restaurants.subscribe(restaurants => {
             this.loadedRestaurant = [...restaurants];
-            this.socket.emit('status-changed', this.order);
-            this.socket.fromEvent('new-status').subscribe( (data: any) => {
-              console.log(data);
-              this.showToast('Status: ' + data.event);
-            });
             this.isLoading = false;
           });
         });
@@ -80,9 +75,15 @@ export class DetailsPage implements OnInit, OnDestroy {
       this.orderService.updateStatusOrder(
         this.order._id,
         status
-      ).subscribe(() => {
+      ).subscribe((stat: string) => {
         loadingElm.dismiss();
-        this.navCtrl.navigateBack('/restaurants/tabs/orders');
+        this.socket.emit('status-changed', stat);
+        this.socket.fromEvent('new-status').subscribe( (data: object & { event: string, status: any}) => {
+          if (!this.authService.isRestaurant() || !this.authService.checkAdmin()) {
+            this.showToast(`Status ${data.event} to ${data.status.status}`);
+          }
+        });
+        // this.navCtrl.navigateBack('/restaurants/tabs/orders');
       });
     });
   }
