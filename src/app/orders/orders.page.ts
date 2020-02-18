@@ -47,7 +47,7 @@ export class OrdersPage implements OnInit, OnDestroy {
     });
   }
   doRefresh(event) {
-    this.ordersService.fetchOrders().subscribe(() =>{
+    this.ordersService.fetchOrders().subscribe(() => {
       setTimeout(() => {
         event.target.complete();
       }, 1000);
