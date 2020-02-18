@@ -50,7 +50,8 @@ export class OrdersPage implements OnInit, OnDestroy {
     const toast = await this.toastCtrl.create({
       message: event,
       position: 'bottom',
-      duration: 4000
+      duration: 4000,
+      color: 'primary'
     });
     toast.present();
   }
