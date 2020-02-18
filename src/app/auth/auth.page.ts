@@ -87,6 +87,7 @@ export class AuthPage implements OnInit {
         localStorage.setItem('token', res.token);
         this.router.navigateByUrl(this.returnUrl);
         loadingElm.dismiss();
+      // tslint:disable-next-line: variable-name
       }, _err => {
         loadingElm.dismiss();
         this.alert.create({

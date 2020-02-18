@@ -50,11 +50,15 @@ export class DetailsPage implements OnInit, OnDestroy {
           this.order = order;
           this.restaurantSub = this.restaurantsService.restaurants.subscribe(restaurants => {
             this.loadedRestaurant = [...restaurants];
+            this.socket.emit('status-changed', this.order);
+            this.socket.fromEvent('new-status').subscribe( (data: any) => {
+              console.log(data);
+              this.showToast('Status: ' + data.event);
+            });
             this.isLoading = false;
           });
         });
       });
-    console.log(this.socket.emit('status-changed', this.order));
   }
 
   statusInformation(status: string) {
@@ -80,10 +84,6 @@ export class DetailsPage implements OnInit, OnDestroy {
         loadingElm.dismiss();
         this.navCtrl.navigateBack('/restaurants/tabs/orders');
       });
-    });
-    this.socket.fromEvent('status-message').subscribe( (data: any) => {
-      console.log(data);
-      this.showToast('Status: ' + data.event);
     });
   }
 
