@@ -3,7 +3,7 @@ import { Order } from '../order.model';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AuthService } from '../../auth/auth.service';
 import { OrderService } from '../order.service';
-import { LoadingController, NavController} from '@ionic/angular';
+import { LoadingController, NavController, ToastController} from '@ionic/angular';
 import { Subscription } from 'rxjs';
 import { Socket } from 'ngx-socket-io';
 import { Restaurant } from 'src/app/restaurants/restaurant.model';
@@ -30,6 +30,7 @@ export class DetailsPage implements OnInit, OnDestroy {
     private orderService: OrderService,
     private navCtrl: NavController,
     private loadingCtrl: LoadingController,
+    private toastCtrl: ToastController,
     private restaurantsService: RestaurantsService,
     private socket: Socket,
     private router: Router
@@ -53,7 +54,7 @@ export class DetailsPage implements OnInit, OnDestroy {
           });
         });
       });
-    this.socket.emit('set-name', this.order);
+    console.log(this.socket.emit('status-changed', this.order));
   }
 
   statusInformation(status: string) {
@@ -80,6 +81,19 @@ export class DetailsPage implements OnInit, OnDestroy {
         this.navCtrl.navigateBack('/restaurants/tabs/orders');
       });
     });
+    this.socket.fromEvent('status-message').subscribe( (data: any) => {
+      console.log(data);
+      this.showToast('Status: ' + data.event);
+    });
+  }
+
+  async showToast(event) {
+    const toast = await this.toastCtrl.create({
+      message: event,
+      position: 'top',
+      duration: 2000
+    });
+    toast.present();
   }
 
   getRestaurantName(id: string) {
@@ -94,7 +108,7 @@ export class DetailsPage implements OnInit, OnDestroy {
     }
   }
 
-  submitRating(id: string, restaurantId: string, rating: number){
+  submitRating(id: string, restaurantId: string, rating: number) {
     this.loadingCtrl.create({
       message: 'Update rating...'
     }).then(async loadingElm => {
@@ -103,7 +117,7 @@ export class DetailsPage implements OnInit, OnDestroy {
         this.restaurantsService.updateRestaurantRating(restaurantId).subscribe(() => {
           loadingElm.dismiss();
           this.router.navigate(['/restaurants/tabs/discover']);
-        })
+        });
       });
     });
   }
