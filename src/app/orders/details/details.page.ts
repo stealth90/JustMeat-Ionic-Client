@@ -53,6 +53,20 @@ export class DetailsPage implements OnInit, OnDestroy {
           });
         });
       });
+    this.socket.fromEvent('new-status').subscribe( (data: object & { event: string, status: any}) => {
+        if (!this.authService.isRestaurant()) {
+          this.showToast(`Status ${data.event} to ${data.status.status}`);
+        }
+      });
+  }
+
+  async showToast(event) {
+    const toast = await this.toastCtrl.create({
+      message: event,
+      position: 'bottom',
+      duration: 4000
+    });
+    toast.present();
   }
 
   statusInformation(status: string) {
@@ -77,6 +91,7 @@ export class DetailsPage implements OnInit, OnDestroy {
       ).subscribe((stat: string) => {
         loadingElm.dismiss();
         this.socket.emit('status-changed', stat);
+        this.navCtrl.navigateBack('/restaurants/tabs/orders');
       });
     });
   }
