@@ -8,6 +8,7 @@ import { Subscription } from 'rxjs';
 import { Socket } from 'ngx-socket-io';
 import { Restaurant } from 'src/app/restaurants/restaurant.model';
 import { RestaurantsService } from 'src/app/restaurants/restaurants.service';
+import { NewUser } from '../../auth/models/userInterface.model';
 
 @Component({
   selector: 'app-details',
@@ -21,6 +22,8 @@ export class DetailsPage implements OnInit, OnDestroy {
   private restaurantSub: Subscription;
   statusList: Array<string> = ['NEW', 'ACCEPTED', 'SHIPPED', 'DELIVERED'];
   orderId: string;
+  userName: string;
+  userSurname: string;
   isLoading = false;
   rating: number;
 
@@ -53,6 +56,11 @@ export class DetailsPage implements OnInit, OnDestroy {
           });
         });
       });
+    this.authService.getUser(this.order.user).subscribe( (user: NewUser) => {
+      this.userName = user.name;
+      this.userSurname = user.surname;
+      this.isLoading = false;
+    });
     this.socket.fromEvent('new-status').subscribe( (data: object & { event: string, status: any}) => {
         if (!this.authService.isRestaurant()) {
           this.showToast(`Status ${data.event} to ${data.status.status}`);

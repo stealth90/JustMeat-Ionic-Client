@@ -109,24 +109,35 @@
       <ion-card-subtitle>Order N°: {{order._id}}</ion-card-subtitle>
     </ion-card-header>
     <ion-card-content >
-      <p>User: {{order.user}}</p>
-      <p>Restaurant: {{order.restaurant}}</p>
+      <p>User: {{userName}} {{userSurname}}</p>
+      <p *ngIf="!isRestaurant()">Restaurant: {{order.restaurant}}</p>
       <p>Date: {{order.date}}</p>
       <p>Shipping Address: {{order.shippingAddress}}</p>
-      <p>Ordered Plate: </p>
+      <p class="ion-text-uppercase">Piatti ordinati: </p>
       <span *ngFor="let item of order.orderItems">
         <p>Quantity: {{item.quantity}}</p>
         <p>Name: {{item.name}}</p>
         <p>Price: {{item.price}}</p>
       </span>
-      <p>Total Amount: {{order.totalAmount}}</p>
+      <p>Total amount: € {{order.totalAmount}}</p>
       <p>Rating: {{order.rating}}</p>
-      <p *ngIf="!isRestaurant()">Status Order: {{order.statusOrder}}</p>
+      <p *ngIf="!isRestaurant()">Order status: {{order.statusOrder}}</p>
       <br>
       <span *ngIf="isRestaurant()">
-        <p>Last status: {{order.statusOrder}}</p>
+        <div *ngIf="order.statusOrder === 'NEW'">
+          <p>Last status: <span class="statusOrderNew">{{order.statusOrder}}</span></p>
+        </div>
+        <div *ngIf="order.statusOrder === 'ACCEPTED'">
+          <p>Last status: <span class="statusOrderAccepted">{{order.statusOrder}}</span></p>
+        </div>
+        <div *ngIf="order.statusOrder === 'SHIPPED'">
+          <p>Last status: <span class="statusOrderShipped">{{order.statusOrder}}</span></p>
+        </div>
+        <div *ngIf="order.statusOrder === 'DELIVERED'">
+          <p>Last status: <span class="statusOrderDelivered">{{order.statusOrder}}</span></p>
+        </div>
         <div *ngIf="order.statusOrder !== 'DELIVERED'" >
-          <p>Update to</p>
+          <p>Aggiorna a:</p>
           <ion-button (click)= "onStatusChange(statusInformation(order.statusOrder))">{{statusInformation(order.statusOrder)}}</ion-button>
         </div>
       </span>
