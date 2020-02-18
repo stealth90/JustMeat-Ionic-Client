@@ -47,6 +47,10 @@ export class OrdersPage implements OnInit, OnDestroy {
     });
   }
 
+  onLogout() {
+    this.authService.logoutUser();
+  }
+
   getRestaurantName(id: string) {
     for (const rest of this.loadedRestaurant) {
       if (rest._id === id) { return rest.name; }

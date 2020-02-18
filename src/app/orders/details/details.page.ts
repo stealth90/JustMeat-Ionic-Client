@@ -37,7 +37,7 @@ export class DetailsPage implements OnInit, OnDestroy {
     ) { }
 
   ngOnInit() {
-    this.socket.connect();
+    // this.socket.connect();
     this.route.paramMap.subscribe(async paramMap => {
       if (!paramMap.has('orderId')) {
         this.navCtrl.navigateBack('/restaurants/tabs/orders');
@@ -78,24 +78,24 @@ export class DetailsPage implements OnInit, OnDestroy {
       ).subscribe((stat: string) => {
         loadingElm.dismiss();
         this.socket.emit('status-changed', stat);
-        this.socket.fromEvent('new-status').subscribe( (data: object & { event: string, status: any}) => {
-          if (!this.authService.isRestaurant() || !this.authService.checkAdmin()) {
-            this.showToast(`Status ${data.event} to ${data.status.status}`);
-          }
-        });
+        // this.socket.fromEvent('new-status').subscribe( (data: object & { event: string, status: any}) => {
+        //   if (!this.authService.isRestaurant()) {
+        //     this.showToast(`Status ${data.event} to ${data.status.status}`);
+        //   }
+        // });
         // this.navCtrl.navigateBack('/restaurants/tabs/orders');
       });
     });
   }
 
-  async showToast(event) {
-    const toast = await this.toastCtrl.create({
-      message: event,
-      position: 'top',
-      duration: 2000
-    });
-    toast.present();
-  }
+  // async showToast(event) {
+  //   const toast = await this.toastCtrl.create({
+  //     message: event,
+  //     position: 'bottom',
+  //     duration: 4000
+  //   });
+  //   toast.present();
+  // }
 
   getRestaurantName(id: string) {
     for (const rest of this.loadedRestaurant) {
