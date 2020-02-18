@@ -46,6 +46,13 @@ export class RestaurantsDetailPage implements OnInit, OnDestroy {
       });
     }
   }
+  doRefresh(event) {
+    this.restaurantService.fetchRestaurants().subscribe(() =>{
+      setTimeout(() => {
+        event.target.complete();
+      }, 1000);
+    });
+  }
 
   capitalizeFirstLetter(city: string) {
     return city.charAt(0).toUpperCase() + city.slice(1);

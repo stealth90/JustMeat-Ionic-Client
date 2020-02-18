@@ -99,7 +99,7 @@ export class DiscoverPage implements OnInit, OnDestroy {
   public loadedRestaurant: Restaurant[] = [];
   private ordersSub: Subscription;
   private restaurantsSub: Subscription;
-  isLoading2 = false;
+  isLoading = false;
 
   constructor(
     private orderService: OrderService,
@@ -109,23 +109,21 @@ export class DiscoverPage implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit() {
-    this.isLoading2 = true;
+    this.isLoading = true;
     this.restaurantsSub = this.restaurantService.restaurants.subscribe(restaurants => {
       this.loadedRestaurant = [...restaurants];
       this.ordersSub = this.orderService.orders.subscribe(orders => {
         this.loadedOrders = [...orders];
       });
-      this.isLoading2 = false;
     });
   }
 
   ionViewWillEnter() {
-    this.isLoading2 = true;
     this.restaurantService.fetchRestaurants().subscribe(() => {
       this.orderService.fetchOrders().subscribe(() => {
+        this.isLoading = false;
       });
     });
-    this.isLoading2 = false;
   }
 
 

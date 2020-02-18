@@ -10,6 +10,9 @@
 </ion-header>
   
   <ion-content class="ion-padding">
+    <ion-refresher slot="fixed" (ionRefresh)="doRefresh($event)">
+      <ion-refresher-content></ion-refresher-content>
+    </ion-refresher>
     <ion-segment (ionChange)="OnFilterUpdate($event)" value="pizzeria" color="primary">
       <ion-segment-button value="pizzeria">
         <ion-label>Pizzerias</ion-label>
