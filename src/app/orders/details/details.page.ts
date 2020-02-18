@@ -79,6 +79,12 @@ export class DetailsPage implements OnInit, OnDestroy {
     });
     return this.statusList[index + 1];
   }
+  isAdmin() {
+    return this.authService.checkAdmin();
+  }
+  isRestaurant() {
+    return this.authService.isRestaurant();
+  }
 
   onStatusChange(status: string) {
     this.loadingCtrl.create({

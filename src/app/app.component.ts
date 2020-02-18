@@ -42,6 +42,12 @@ export class AppComponent implements OnInit, OnDestroy {
       }
     });
   }
+  isAdmin() {
+    return this.authService.checkAdmin();
+  }
+  isRestaurant() {
+    return this.authService.isRestaurant();
+  }
 
   initializeApp() {
     this.platform.ready().then(() => {

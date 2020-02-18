@@ -8,7 +8,7 @@
 </ion-header>
 
 <ion-content>
-  <ion-grid class="ion-no-padding" *ngIf="!authService.checkAdmin() && !authService.isRestaurant()">
+  <ion-grid class="ion-no-padding" *ngIf="!isAdmin() && !isRestaurant()">
     <ion-row>
       <ion-col>
         <ion-img src="../../../assets/just-eat-scooters.jpg"></ion-img>
@@ -104,7 +104,7 @@
       </ion-col>
     </ion-row>
   </ion-grid>
-  <ion-card *ngIf="!this.authService.checkAdmin() && authService.isRestaurant()">
+  <ion-card *ngIf="!isAdmin() && isRestaurant()">
     <ion-card-header>
       <ion-card-subtitle>Order N°: {{order._id}}</ion-card-subtitle>
     </ion-card-header>
@@ -121,9 +121,9 @@
       </span>
       <p>Total Amount: {{order.totalAmount}}</p>
       <p>Rating: {{order.rating}}</p>
-      <p *ngIf="!authService.isRestaurant()">Status Order: {{order.statusOrder}}</p>
+      <p *ngIf="!isRestaurant()">Status Order: {{order.statusOrder}}</p>
       <br>
-      <span *ngIf="authService.isRestaurant()">
+      <span *ngIf="isRestaurant()">
         <p>Last status: {{order.statusOrder}}</p>
         <div *ngIf="order.statusOrder !== 'DELIVERED'" >
           <p>Update to</p>

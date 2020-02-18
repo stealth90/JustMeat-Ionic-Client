@@ -47,7 +47,7 @@ export class RestaurantsDetailPage implements OnInit, OnDestroy {
     }
   }
   doRefresh(event) {
-    this.restaurantService.fetchRestaurants().subscribe(() =>{
+    this.restaurantService.fetchRestaurants().subscribe(() => {
       setTimeout(() => {
         event.target.complete();
       }, 1000);
@@ -64,7 +64,7 @@ export class RestaurantsDetailPage implements OnInit, OnDestroy {
     if (event.detail.value === 'pizzeria') {
       this.filteredRestaurants = this.loadedRestaurants.filter( restaurant => restaurant.typology === 'Pizzeria');
     } else {
-      this.filteredRestaurants = this.loadedRestaurants.filter( restaurant => restaurant.typology === 'Ristorante')
+      this.filteredRestaurants = this.loadedRestaurants.filter( restaurant => restaurant.typology === 'Ristorante');
     }
   }
 

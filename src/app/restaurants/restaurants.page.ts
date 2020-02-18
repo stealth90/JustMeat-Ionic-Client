@@ -32,4 +32,11 @@ export class RestaurantsPage implements OnInit {
     });
   }
 
+  isAdmin() {
+    return this.authService.checkAdmin();
+  }
+  isRestaurant() {
+    return this.authService.isRestaurant();
+  }
+
 }

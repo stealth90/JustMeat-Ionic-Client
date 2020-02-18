@@ -55,6 +55,12 @@ export class OrdersPage implements OnInit, OnDestroy {
     });
     toast.present();
   }
+  isAdmin() {
+    return this.authService.checkAdmin();
+  }
+  isRestaurant() {
+    return this.authService.isRestaurant();
+  }
 
   ionViewWillEnter() {
     this.isLoading = true;

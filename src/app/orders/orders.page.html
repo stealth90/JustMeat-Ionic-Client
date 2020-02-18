@@ -1,9 +1,9 @@
 <ion-header>
   <ion-toolbar>
     <ion-buttons slot="start" >
-        <ion-back-button defaultHref="/restaurants/tabs/discover" *ngIf="!authService.isRestaurant()"></ion-back-button>
+        <ion-back-button defaultHref="/restaurants/tabs/discover" *ngIf="!isRestaurant()"></ion-back-button>
     </ion-buttons>
-    <ion-buttons slot="start" *ngIf="authService.isRestaurant()">
+    <ion-buttons slot="start" *ngIf="isRestaurant()">
       <ion-button (click)= "onLogout()">
         <ion-icon name="exit" slot="start"></ion-icon>
         <ion-label>Logout</ion-label>
@@ -21,7 +21,7 @@
     <ion-spinner></ion-spinner>
   </div>
   <ion-grid *ngIf="!isLoading">
-    <ion-row *ngIf="!authService.checkAdmin() && !authService.isRestaurant()">
+    <ion-row *ngIf="!isAdmin() && !isRestaurant()">
       <ion-col size="12" size-sm="8" offset-sm="2" class="ionic-text-center">
         <ion-card style="margin: 50px 0;" *ngFor="let order of loadedOrders">
           <ion-card-content>
@@ -74,7 +74,7 @@
         </ion-card>
       </ion-col>
     </ion-row>
-    <ion-row *ngIf="!authService.checkAdmin() && authService.isRestaurant()">
+    <ion-row *ngIf="!isAdmin() && isRestaurant()">
       <ion-col size-md="6" offset-md="3">
         <ion-list>
           <ion-item-sliding *ngFor="let order of loadedOrders" #slidingOrder>
