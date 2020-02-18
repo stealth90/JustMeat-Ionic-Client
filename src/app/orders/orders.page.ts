@@ -46,6 +46,7 @@ export class OrdersPage implements OnInit, OnDestroy {
       });
     });
   }
+<<<<<<< HEAD
   doRefresh(event) {
     this.ordersService.fetchOrders().subscribe(() =>{
       setTimeout(() => {
@@ -53,6 +54,13 @@ export class OrdersPage implements OnInit, OnDestroy {
       }, 1000);
     });
   }
+=======
+
+  onLogout() {
+    this.authService.logoutUser();
+  }
+
+>>>>>>> f8955330a2107504cb760f697cc107082c9a5f4e
   getRestaurantName(id: string) {
     for (const rest of this.loadedRestaurant) {
       if (rest._id === id) { return rest.name; }

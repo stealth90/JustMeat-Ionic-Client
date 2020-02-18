@@ -1,7 +1,13 @@
 <ion-header>
   <ion-toolbar>
-    <ion-buttons *ngIf="!authService.isRestaurant()" slot="start">
-        <ion-back-button defaultHref="/restaurants/tabs/discover"></ion-back-button>
+    <ion-buttons slot="start" >
+        <ion-back-button defaultHref="/restaurants/tabs/discover" *ngIf="!authService.isRestaurant()"></ion-back-button>
+    </ion-buttons>
+    <ion-buttons slot="start" *ngIf="authService.isRestaurant()">
+      <ion-button (click)= "onLogout()">
+        <ion-icon name="exit" slot="start"></ion-icon>
+        <ion-label>Logout</ion-label>
+      </ion-button>
     </ion-buttons>
     <ion-title>Your Orders</ion-title>
   </ion-toolbar>
