@@ -9,7 +9,7 @@ import { AuthService } from '../auth/auth.service';
 export class RestaurantsPage implements OnInit {
 
   constructor(
-) { }
+    private authService: AuthService) { }
 
   ngOnInit() {
   }
