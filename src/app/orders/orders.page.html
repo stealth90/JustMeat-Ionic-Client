@@ -1,6 +1,6 @@
 <ion-header>
   <ion-toolbar>
-    <ion-buttons slot="start">
+    <ion-buttons *ngIf="!authService.isRestaurant()" slot="start">
         <ion-back-button defaultHref="/restaurants/tabs/discover"></ion-back-button>
     </ion-buttons>
     <ion-title>Your Orders</ion-title>

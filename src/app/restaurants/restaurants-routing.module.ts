@@ -3,6 +3,7 @@ import { Routes, RouterModule } from '@angular/router';
 
 import { RestaurantsPage } from './restaurants.page';
 import { AuthGuard } from '../auth/auth.guard';
+import { RestaurantGuard } from '../auth/restaurant.guard';
 
 const routes: Routes = [
   {
@@ -17,7 +18,8 @@ const routes: Routes = [
       {
         path: '',
         redirectTo: '/restaurants/tabs/discover',
-        pathMatch: 'full'
+        pathMatch: 'full',
+        canActivate : [RestaurantGuard]
       },
       {
         path : 'discover',
@@ -35,7 +37,8 @@ const routes: Routes = [
             // tslint:disable-next-line: max-line-length
             loadChildren: () => import('./discover/restaurant-detail/restaurant-detail.module').then( m => m.RestaurantDetailPageModule)
           } */
-        ]
+        ],
+        canActivate : [RestaurantGuard]
       },
       {
         path: 'restaurant',

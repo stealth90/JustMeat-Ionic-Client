@@ -35,7 +35,7 @@ export class RestaurantsDetailPage implements OnInit, OnDestroy {
 
   ionViewWillEnter() {
     this.isLoading = true;
-    if (this.city !== '') {
+    if (!this.city) {
       this.city = this.route.snapshot.paramMap.get('city').toLowerCase();
       this.restaurantService.fetchRestaurantsByCity(this.capitalizeFirstLetter(this.city)).subscribe(() => {
         this.isLoading = false;
