@@ -29,8 +29,7 @@ export class AppComponent {
           // tslint:disable-next-line: no-string-literal
           localStorage.setItem['firstTimeLoad'] = 'TRUE';
           this.navController.navigateRoot('homepage');
-      }
-      else{
+      } else {
         return this.navController.navigateRoot(['restaurants/tabs/discover']);
       }
       /* this.authService.authenticationState.subscribe( state => {
