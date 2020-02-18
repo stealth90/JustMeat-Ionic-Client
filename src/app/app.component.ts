@@ -47,7 +47,7 @@ export class AppComponent implements OnInit {
       this.statusBar.styleDefault();
       this.splashScreen.hide();
       // tslint:disable-next-line: no-string-literal
-      if (localStorage.getItem['firstTimeLoad'] !== 'TRUE') {
+      if (localStorage.getItem['firstTimeLoad'] || localStorage.getItem['firstTimeLoad'] !== 'TRUE') {
           // tslint:disable-next-line: no-string-literal
           localStorage.setItem['firstTimeLoad'] = 'TRUE';
           this.navController.navigateRoot('homepage');
