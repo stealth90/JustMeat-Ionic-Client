@@ -4,8 +4,9 @@ import { Subscription } from 'rxjs';
 import { NewUser } from '../auth/models/userInterface.model';
 import { Router } from '@angular/router';
 import { AuthService } from '../auth/auth.service';
-import { LoadingController} from '@ionic/angular';
+import { LoadingController, ToastController} from '@ionic/angular';
 import * as jwt_decode from 'jwt-decode';
+import { Socket } from 'ngx-socket-io';
 
 @Component({
   selector: 'app-profile',
@@ -26,6 +27,8 @@ export class ProfilePage implements OnInit, OnDestroy {
     private authService: AuthService,
     private router: Router,
     private loadingCtrl: LoadingController,
+    private socket: Socket,
+    private toastCtrl: ToastController
   ) { }
 
   ngOnInit() {
@@ -62,6 +65,20 @@ export class ProfilePage implements OnInit, OnDestroy {
         });
         this.isLoading = false;
       });
+    this.socket.fromEvent('new-status').subscribe( (data: object & { status: any}) => {
+        if (!this.authService.isRestaurant()) {
+          this.showToast(`Un ordine è cambiato a ${data.status.status}`);
+        }
+      });
+  }
+
+  async showToast(event) {
+    const toast = await this.toastCtrl.create({
+      message: event,
+      position: 'bottom',
+      duration: 4000
+    });
+    toast.present();
   }
 
   onEditProfile() {

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 
 import { Platform, NavController, ToastController } from '@ionic/angular';
 import { SplashScreen } from '@ionic-native/splash-screen/ngx';
@@ -11,7 +11,7 @@ import { Socket } from 'ngx-socket-io';
   templateUrl: 'app.component.html',
   styleUrls: ['app.component.scss']
 })
-export class AppComponent implements OnInit {
+export class AppComponent implements OnInit, OnDestroy {
 
   constructor(
     private platform: Platform,
@@ -66,5 +66,9 @@ export class AppComponent implements OnInit {
 
   onLogout() {
     this.authService.logoutUser();
+  }
+
+  ngOnDestroy() {
+    this.socket.disconnect();
   }
 }

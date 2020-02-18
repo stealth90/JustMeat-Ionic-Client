@@ -1,12 +1,13 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { OrderService } from './order.service';
 import { Order, OrderList } from './order.model';
-import { IonItemSliding } from '@ionic/angular';
+import { IonItemSliding, ToastController } from '@ionic/angular';
 import { Subscription } from 'rxjs';
 import { Router } from '@angular/router';
 import { Restaurant } from '../restaurants/restaurant.model';
 import { RestaurantsService } from '../restaurants/restaurants.service';
 import { AuthService } from '../auth/auth.service';
+import { Socket } from 'ngx-socket-io';
 
 @Component({
   selector: 'app-orders',
@@ -25,6 +26,8 @@ export class OrdersPage implements OnInit, OnDestroy {
     private ordersService: OrderService,
     private restaurantsService: RestaurantsService,
     private router: Router,
+    private toastCtrl: ToastController,
+    private socket: Socket,
     private authService: AuthService) { }
 
   ngOnInit() {
@@ -36,6 +39,20 @@ export class OrdersPage implements OnInit, OnDestroy {
       });
       this.isLoading = false;
     });
+    this.socket.fromEvent('new-status').subscribe( (data: object & { event: string, status: any}) => {
+      if (!this.authService.isRestaurant()) {
+        this.showToast(`Status ${data.event} to ${data.status.status}`);
+      }
+    });
+  }
+
+  async showToast(event) {
+    const toast = await this.toastCtrl.create({
+      message: event,
+      position: 'bottom',
+      duration: 4000
+    });
+    toast.present();
   }
 
   ionViewWillEnter() {

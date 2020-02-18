@@ -117,8 +117,4 @@ export class DetailsPage implements OnInit, OnDestroy {
     }
   }
 
-  ionViewWillLeave() {
-    this.socket.disconnect();
-  }
-
 }
