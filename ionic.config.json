@@ -1,5 +1,7 @@
 {
   "name": "JustMeat",
-  "integrations": {},
+  "integrations": {
+    "capacitor": {}
+  },
   "type": "angular"
 }

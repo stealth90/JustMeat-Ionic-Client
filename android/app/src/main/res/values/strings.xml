@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="app_name">JustMeat</string>
+    <string name="title_activity_main">JustMeat</string>
+    <string name="package_name">com.stevejobsacademy.justmeat</string>
+    <string name="custom_url_scheme">com.stevejobsacademy.justmeat</string>
+</resources>
