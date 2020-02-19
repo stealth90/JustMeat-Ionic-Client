@@ -125,6 +125,13 @@ export class DiscoverPage implements OnInit, OnDestroy {
       });
     });
   }
+// TODO
+  ordersExist() {
+    if (this.loadedOrders) {
+      return true;
+    }
+    return false;
+  }
 
 
   onOpenMenu() {

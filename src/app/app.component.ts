@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 
 import { Platform, NavController, ToastController } from '@ionic/angular';
 import { SplashScreen } from '@ionic-native/splash-screen/ngx';
@@ -11,7 +11,7 @@ import { Socket } from 'ngx-socket-io';
   templateUrl: 'app.component.html',
   styleUrls: ['app.component.scss']
 })
-export class AppComponent implements OnInit, OnDestroy {
+export class AppComponent implements OnInit {
 
   constructor(
     private platform: Platform,
@@ -53,6 +53,7 @@ export class AppComponent implements OnInit, OnDestroy {
     this.platform.ready().then(() => {
       this.statusBar.styleDefault();
       this.splashScreen.hide();
+      this.platform.backButton.subscribeWithPriority(1, () => {});
       // tslint:disable-next-line: no-string-literal
       if (localStorage.getItem['firstTimeLoad'] || localStorage.getItem['firstTimeLoad'] !== 'TRUE') {
           // tslint:disable-next-line: no-string-literal
@@ -73,9 +74,6 @@ export class AppComponent implements OnInit, OnDestroy {
 
   onLogout() {
     this.authService.logoutUser();
-  }
-
-  ngOnDestroy() {
     this.socket.disconnect();
   }
 }

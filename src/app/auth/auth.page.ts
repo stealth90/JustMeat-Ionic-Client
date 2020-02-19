@@ -1,10 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from './auth.service';
 import { Router, ActivatedRoute } from '@angular/router';
-import { LoadingController, AlertController } from '@ionic/angular';
+import { LoadingController, AlertController, NavController, Platform } from '@ionic/angular';
 import { NgForm } from '@angular/forms';
 import { LoginRule } from './models/loginInterface.model';
 import { NewUser } from './models/userInterface.model';
+import { throwError } from 'rxjs';
 
 @Component({
   selector: 'app-auth',
@@ -31,6 +32,7 @@ export class AuthPage implements OnInit {
 
   constructor(
     private authService: AuthService,
+    private platform: Platform,
     private router: Router,
     private route: ActivatedRoute,
     private loadingCtrl: LoadingController,

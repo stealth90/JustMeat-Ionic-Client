@@ -19,10 +19,10 @@
               </ion-item>
               <ion-item>
                 <ion-label position="floating">Password</ion-label>
-                <ion-input type="password" ngModel name="password" required #passwordCtrl="ngModel" minlength="4"></ion-input>
+                <ion-input type="password" ngModel name="password" required #passwordCtrl="ngModel" minlength="5"></ion-input>
               </ion-item>
               <ion-item *ngIf="!passwordCtrl.valid && passwordCtrl.touched" lines="none">
-                <ion-label>Should at least 4 characters long.</ion-label>
+                <ion-label>Should at least 5 characters long.</ion-label>
               </ion-item>
           </ion-list>
         </ion-col>
@@ -53,10 +53,10 @@
 
               <ion-item>
                 <ion-label position="floating">Password</ion-label>
-                <ion-input type="password" ngModel name="password" required #passwordCtrl="ngModel" minlength="4"></ion-input>
+                <ion-input type="password" ngModel name="password" required #passwordCtrl="ngModel" minlength="5"></ion-input>
               </ion-item>
               <ion-item *ngIf="!passwordCtrl.valid && passwordCtrl.touched" lines="none">
-                <ion-label>Should at least 4 characters long</ion-label>
+                <ion-label>Should at least 5 characters long</ion-label>
               </ion-item>
 
               <ion-item>

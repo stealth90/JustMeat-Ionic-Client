@@ -1,0 +1,8 @@
+{
+  "appId": "com.stevejobsacademy.justmeat",
+  "appName": "JustMeat",
+  "bundledWebRuntime": false,
+  "npmClient": "npm",
+  "webDir": "www",
+  "cordova": {}
+}
