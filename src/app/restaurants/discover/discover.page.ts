@@ -127,7 +127,7 @@ export class DiscoverPage implements OnInit, OnDestroy {
   }
 // TODO
   ordersExist() {
-    if (this.loadedOrders) {
+    if (this.loadedOrders.length < 1) {
       return true;
     }
     return false;

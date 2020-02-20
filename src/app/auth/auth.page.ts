@@ -60,6 +60,7 @@ export class AuthPage implements OnInit {
         });
         this.authService.isNewUser = false;
         localStorage.setItem('token', res.token);
+        this.onSwitchAuthMode();
         this.router.navigate(['/auth']);
       },
       // tslint:disable-next-line: variable-name
@@ -80,14 +81,14 @@ export class AuthPage implements OnInit {
   }
 
   onLogin() {
-    this.loadingCtrl.create(
-      {keyboardClose: true, message: 'Loggin in...'}
-    ).then( async loadingElm => {
+    this.loadingCtrl.create({
+      keyboardClose: true, message: 'Loggin in...'
+    }).then( async loadingElm => {
       loadingElm.present();
       this.authService.loginUser(this.loginDetails)
       .subscribe(res => {
         localStorage.setItem('token', res.token);
-        this.router.navigateByUrl(this.returnUrl);
+        this.router.navigateByUrl(this.returnUrl, { replaceUrl: true });
         loadingElm.dismiss();
       // tslint:disable-next-line: variable-name
       }, _err => {
