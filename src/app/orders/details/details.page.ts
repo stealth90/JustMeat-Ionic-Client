@@ -50,6 +50,7 @@ export class DetailsPage implements OnInit, OnDestroy {
       this.orderSub = this.orderService
         .getOrder(paramMap.get('orderId')).subscribe((order: Order) => {
           this.order = order;
+          console.log(order);
           this.restaurantSub = this.restaurantsService.restaurants.subscribe(restaurants => {
             this.loadedRestaurant = [...restaurants];
             this.isLoading = false;

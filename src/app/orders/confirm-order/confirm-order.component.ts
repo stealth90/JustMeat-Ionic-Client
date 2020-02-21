@@ -84,7 +84,6 @@ export class ConfirmOrderComponent implements OnInit, OnDestroy {
           orderItems: this.myData,
           totalAmount: this.getTotalPriceOrder(),
           statusOrder: 'NEW',
-          rating: 0
         };
         this.orderService
           .createOrder(

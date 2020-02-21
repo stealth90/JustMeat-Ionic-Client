@@ -12,7 +12,7 @@ import { Router } from '@angular/router';
   templateUrl: './discover.page.html',
   styleUrls: ['./discover.page.scss'],
 })
-export class DiscoverPage implements OnInit, OnDestroy {
+export class DiscoverPage implements OnInit{
   citySearched = '';
   slideOpts = {
     slidesPerView: 1,
@@ -97,8 +97,8 @@ export class DiscoverPage implements OnInit, OnDestroy {
   };
   public loadedOrders: Order[] = [];
   public loadedRestaurant: Restaurant[] = [];
-  private ordersSub: Subscription;
-  private restaurantsSub: Subscription;
+  public ordersSub: Subscription;
+  public restaurantsSub: Subscription;
   isLoading = false;
 
   constructor(
@@ -108,17 +108,15 @@ export class DiscoverPage implements OnInit, OnDestroy {
     private router: Router
   ) {}
 
-  ngOnInit() {
+  ngOnInit() {}
+  ionViewWillEnter() {
     this.isLoading = true;
     this.restaurantsSub = this.restaurantService.restaurants.subscribe(restaurants => {
       this.loadedRestaurant = [...restaurants];
-      this.ordersSub = this.orderService.orders.subscribe(orders => {
-        this.loadedOrders = [...orders];
-      });
     });
-  }
-
-  ionViewWillEnter() {
+    this.ordersSub = this.orderService.orders.subscribe(orders => {
+      this.loadedOrders = [...orders];
+    });
     this.restaurantService.fetchRestaurants().subscribe(() => {
       this.orderService.fetchOrders().subscribe(() => {
         this.isLoading = false;
@@ -165,7 +163,7 @@ export class DiscoverPage implements OnInit, OnDestroy {
     this.router.navigate(['restaurants/tabs/discover/restaurants-detail', city]);
   }
 
-  ngOnDestroy() {
+  ionViewWillUnload() {
     if (this.ordersSub) {
       this.ordersSub.unsubscribe();
     }

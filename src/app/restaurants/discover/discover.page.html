@@ -23,62 +23,58 @@
       </ion-col>
     </ion-row>
   </ion-grid>
-  <span *ngIf="ordersExist()">
-    <ion-grid class="ion-padding ion-margin-top">
-      <ion-row>
-        <ion-col size-sm="6" offset-sm="3">
-          <ion-label>
-            <h1 style="display: inline;">Reorder</h1>
-            <p style="display: inline; color: #d50525">See all</p>
-          </ion-label>
-        </ion-col>
-      </ion-row>
-    </ion-grid>
-    <div *ngIf="isLoading" class="ion-text-center">
-      <ion-spinner></ion-spinner>
-    </div>
-    <ion-grid *ngIf="!isLoading">
-      <ion-row >
-        <ion-col size-sm="6" offset-sm="3">
-          <ion-slides [options]="slideOpts" >
-            <ion-slide *ngFor="let order of loadedOrders" style="box-shadow: 0px 3px 4px 0px rgba(204, 203, 203, 0.747);" routerLink="/restaurants/tabs/orders">
-              <ion-grid>
-                <ion-row >
-                  <ion-col>
-                    <ion-thumbnail style="display: flex; margin: 0 auto;" >
-                      <img [src]="getRestaurantAvatar(order.restaurant)">
-                    </ion-thumbnail>
-                  </ion-col>
-                </ion-row>
-                <ion-row >
-                  <ion-col>
-                    <h4>{{getRestaurantName(order.restaurant)}}</h4>
-                  </ion-col>
-                </ion-row>
-                <ion-row >
-                  <ion-col>
-                    <ion-label>
-                      <p>{{order.date | date: 'dd-MM-yyyy'}}</p>
-                    </ion-label>
-                  </ion-col>
-                </ion-row>
-                <ion-row >
-                  <ion-col>
-                    <ion-label>
-                      <p>{{getPlates(order._id)}}</p>
-                    </ion-label>
-                  </ion-col>
-                </ion-row>
-                <ion-row>
-                  <ion-col offset="10">
-                    <p>{{order.totalAmount | currency:'EUR':'symbol-narrow':'1.2-2'}}</p>
-                  </ion-col>
-                </ion-row>
-              </ion-grid>
-            </ion-slide>
-          </ion-slides>
-        </ion-col>
-      </ion-row>
-    </ion-grid>
-  </span>
+  <div *ngIf="isLoading" class="ion-text-center">
+    <ion-spinner></ion-spinner>
+  </div>
+  <ion-grid *ngIf="!isLoading && loadedOrders.length !== 0 " class="ion-padding ion-margin-top">
+    <ion-row>
+      <ion-col size-sm="6" offset-sm="3">
+        <ion-label>
+          <h1 style="display: inline;">Reorder</h1>
+          <p style="display: inline; color: #d50525">See all</p>
+        </ion-label>
+      </ion-col>
+    </ion-row>
+    <ion-row >
+      <ion-col size-sm="6" offset-sm="3">
+        <ion-slides [options]="slideOpts" >
+          <ion-slide *ngFor="let order of loadedOrders" style="box-shadow: 0px 3px 4px 0px rgba(204, 203, 203, 0.747);" routerLink="/restaurants/tabs/orders">
+            <ion-grid>
+              <ion-row >
+                <ion-col>
+                  <ion-thumbnail style="display: flex; margin: 0 auto;" >
+                    <img [src]="getRestaurantAvatar(order.restaurant)">
+                  </ion-thumbnail>
+                </ion-col>
+              </ion-row>
+              <ion-row >
+                <ion-col>
+                  <h4>{{getRestaurantName(order.restaurant)}}</h4>
+                </ion-col>
+              </ion-row>
+              <ion-row >
+                <ion-col>
+                  <ion-label>
+                    <p>{{order.date | date: 'dd-MM-yyyy'}}</p>
+                  </ion-label>
+                </ion-col>
+              </ion-row>
+              <ion-row >
+                <ion-col>
+                  <ion-label>
+                    <p>{{getPlates(order._id)}}</p>
+                  </ion-label>
+                </ion-col>
+              </ion-row>
+              <ion-row>
+                <ion-col offset="10">
+                  <p>{{order.totalAmount | currency:'EUR':'symbol-narrow':'1.2-2'}}</p>
+                </ion-col>
+              </ion-row>
+            </ion-grid>
+          </ion-slide>
+        </ion-slides>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
 </ion-content>

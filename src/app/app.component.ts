@@ -71,9 +71,17 @@ export class AppComponent implements OnInit {
       }); */
     });
   }
+  goToRestaurants(){
+    return this.navController.navigateRoot(['restaurants/tabs/discover']);
+  }
+
+  goToOrders(){
+    return this.navController.navigateRoot(['restaurants/tabs/order']);
+  }
 
   onLogout() {
     this.authService.logoutUser();
     this.socket.disconnect();
+    return this.navController.navigateRoot(['/auth']);
   }
 }
