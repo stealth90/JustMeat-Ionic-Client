@@ -31,7 +31,9 @@ export class ProfilePage implements OnInit, OnDestroy {
     private toastCtrl: ToastController
   ) { }
 
-  ngOnInit() {
+  ngOnInit() {}
+
+  ionViewWillEnter() {
     this.isLoading = true;
     this.token = this.authService.getToken();
     this.decoded = jwt_decode(this.token);
