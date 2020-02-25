@@ -15,7 +15,7 @@ import { Router } from '@angular/router';
   templateUrl: 'app.component.html',
   styleUrls: ['app.component.scss']
 })
-export class AppComponent{
+export class AppComponent {
 
   constructor(
     private platform: Platform,
@@ -43,9 +43,7 @@ export class AppComponent{
   ionViewWillEnter() {
     this.socket.connect();
     this.socket.fromEvent('new-status').subscribe( (data: object & { event: string, status: any}) => {
-      console.log(data);
       if (!this.authService.isRestaurant()) {
-
         this.showToast(`Status ${data.event} to ${data.status.status}`);
       }
     });
@@ -68,6 +66,7 @@ export class AppComponent{
       }).subscribe( match => {
         this.router.navigate(['auth/passwordUpdate'], match.$args);
       } , noMatch => {
+        // tslint:disable-next-line: no-string-literal
         if (localStorage.getItem['firstTimeLoad'] || localStorage.getItem['firstTimeLoad'] !== 'TRUE') {
             // tslint:disable-next-line: no-string-literal
             localStorage.setItem['firstTimeLoad'] = 'TRUE';
@@ -89,13 +88,13 @@ export class AppComponent{
     return this.navController.navigateRoot(['restaurants/tabs/discover']);
   }
 
-  goToOrders(){
+  goToOrders() {
     return this.navController.navigateRoot(['restaurants/tabs/order']);
   }
 
   onLogout() {
     this.authService.logoutUser();
-    this.socket.disconnect();
+    // this.socket.disconnect();
     return this.navController.navigateRoot(['/auth']);
   }
 }

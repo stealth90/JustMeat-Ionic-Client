@@ -22,7 +22,7 @@ export class AuthService {
 
   public registerUser(newUser: NewUser) {
     this.authenticationState.next(true);
-    return this.httpClient.post<{token: string}>(`${this.authUrl}/signup`, newUser);
+    return this.httpClient.post(`${this.authUrl}/signup`, newUser);
   }
 
   public loginUser(loginUser: LoginRule) {

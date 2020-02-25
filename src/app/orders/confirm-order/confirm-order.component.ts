@@ -15,7 +15,7 @@ import { Subscription } from 'rxjs';
   templateUrl: './confirm-order.component.html',
   styleUrls: ['./confirm-order.component.scss'],
 })
-export class ConfirmOrderComponent implements OnInit, OnDestroy {
+export class ConfirmOrderComponent implements OnInit {
   myData: OrderList[] = [];
   newOrder: Order;
   user: NewUser;
@@ -81,9 +81,7 @@ export class ConfirmOrderComponent implements OnInit, OnDestroy {
           user: this.userId,
           restaurant: this.idRestaurant,
           shippingAddress: this.user.address,
-          orderItems: this.myData,
-          totalAmount: this.getTotalPriceOrder(),
-          statusOrder: 'NEW',
+          orderItems: this.myData
         };
         this.orderService
           .createOrder(
@@ -96,7 +94,7 @@ export class ConfirmOrderComponent implements OnInit, OnDestroy {
 
     }
 
-    ngOnDestroy() {
+    ionViewDidLeave() {
       if (this.userSub) {
         this.userSub.unsubscribe();
       }

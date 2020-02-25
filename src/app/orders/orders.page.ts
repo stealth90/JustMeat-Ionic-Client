@@ -14,7 +14,7 @@ import { Socket } from 'ngx-socket-io';
   templateUrl: './orders.page.html',
   styleUrls: ['./orders.page.scss'],
 })
-export class OrdersPage implements OnInit, OnDestroy {
+export class OrdersPage implements OnInit {
   public loadedOrders: Order[] = [];
   public loadedRestaurant: Restaurant[] = [];
   private ordersSub: Subscription;
@@ -31,6 +31,7 @@ export class OrdersPage implements OnInit, OnDestroy {
     private authService: AuthService) { }
 
   ngOnInit() {
+    this.router.navigate(['/restaurants/tabs/discover']);
     this.isLoading = true;
     this.restaurantsSub = this.restaurantsService.restaurants.subscribe(restaurants => {
       this.loadedRestaurant = [...restaurants];
@@ -63,6 +64,7 @@ export class OrdersPage implements OnInit, OnDestroy {
   }
 
   ionViewWillEnter() {
+    this.router.navigate(['/restaurants/tabs/orders']);
     this.isLoading = true;
     this.restaurantsService.fetchRestaurants().subscribe(() => {
       this.ordersService.fetchOrders().subscribe(() => {
@@ -125,7 +127,7 @@ export class OrdersPage implements OnInit, OnDestroy {
     slidingEl.close();
   }
 
-  ngOnDestroy() {
+  ionViewDidLeave() {
     if (this.ordersSub) {
       this.ordersSub.unsubscribe();
     }

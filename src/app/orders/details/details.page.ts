@@ -50,7 +50,6 @@ export class DetailsPage implements OnInit, OnDestroy {
       this.orderSub = this.orderService
         .getOrder(paramMap.get('orderId')).subscribe((order: Order) => {
           this.order = order;
-          console.log(order);
           this.restaurantSub = this.restaurantsService.restaurants.subscribe(restaurants => {
             this.loadedRestaurant = [...restaurants];
             this.isLoading = false;
@@ -63,7 +62,7 @@ export class DetailsPage implements OnInit, OnDestroy {
       this.isLoading = false;
     });
     this.socket.fromEvent('new-status').subscribe( (data: object & { event: string, status: any}) => {
-        if (!this.authService.isRestaurant()) {
+      if (!this.authService.isRestaurant()) {
           this.showToast(`Status ${data.event} to ${data.status.status}`);
         }
       });
@@ -73,7 +72,8 @@ export class DetailsPage implements OnInit, OnDestroy {
     const toast = await this.toastCtrl.create({
       message: event,
       position: 'bottom',
-      duration: 4000
+      duration: 8000,
+      color: 'primary'
     });
     toast.present();
   }
@@ -105,8 +105,7 @@ export class DetailsPage implements OnInit, OnDestroy {
         status
       ).subscribe((stat: string) => {
         loadingElm.dismiss();
-        //this.socket.emit('status-changed', stat);
-        console.log(this.socket.emit('status-changed', stat));
+        this.socket.emit('status-changed', stat);
         this.navCtrl.navigateBack('/restaurants/tabs/orders');
       });
     });

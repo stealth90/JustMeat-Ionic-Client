@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from './auth.service';
 import { Router, ActivatedRoute } from '@angular/router';
-import { LoadingController, AlertController,ToastController, NavController } from '@ionic/angular';
+import { LoadingController, AlertController, ToastController, NavController } from '@ionic/angular';
 import { NgForm } from '@angular/forms';
 import { LoginRule } from './models/loginInterface.model';
 import { NewUser } from './models/userInterface.model';
