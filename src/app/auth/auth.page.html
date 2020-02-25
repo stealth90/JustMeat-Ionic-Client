@@ -1,110 +1,142 @@
 <ion-header>
   <ion-toolbar>
-    <ion-title>{{isLogin ? 'Login' : 'Signup'}}</ion-title>
+    <ion-title>{{isAuth ? isLogin ? 'Login': 'SignUp' : 'Recover Password'}}</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
-  <form #form="ngForm" (ngSubmit)="onSubmit(form)" *ngIf="isLogin">
-    <ion-grid>
-      <ion-row>
-        <ion-col size-sm="6" offset-sm="3">
-          <ion-list>
-              <ion-item>
-                <ion-label position="floating">Email</ion-label>
-                <ion-input type="email" ngModel name="email" required email #emailCtrl="ngModel"></ion-input>
-              </ion-item>
-              <ion-item *ngIf="!emailCtrl.valid && emailCtrl.touched" lines="none">
-                <ion-label>Should be a valid email</ion-label>
-              </ion-item>
-              <ion-item>
-                <ion-label position="floating">Password</ion-label>
-                <ion-input type="password" ngModel name="password" required #passwordCtrl="ngModel" minlength="5"></ion-input>
-              </ion-item>
-              <ion-item *ngIf="!passwordCtrl.valid && passwordCtrl.touched" lines="none">
-                <ion-label>Should at least 5 characters long.</ion-label>
-              </ion-item>
-          </ion-list>
-        </ion-col>
-      </ion-row>
-      <ion-row>
-        <ion-col size-sm="6" offset-sm="3">
-            <ion-button color="primary" fill="clear" expand="block" (click)="onSwitchAuthMode()">Switch to {{isLogin ? 'Signup' : 'Login'}}</ion-button>
-            <ion-button type="submit" color="primary" class="ion-padding-horizontal" expand="block" [disabled]="!form.valid" >
-              Login
+  <div *ngIf=isAuth>
+    <form #form="ngForm" (ngSubmit)="onSubmit(form)" *ngIf="isLogin">
+      <ion-grid>
+        <ion-row>
+          <ion-col size-sm="6" offset-sm="3">
+            <ion-list>
+                <ion-item>
+                  <ion-label position="floating">Email</ion-label>
+                  <ion-input type="email" ngModel name="email" required email #emailCtrl="ngModel"></ion-input>
+                </ion-item>
+                <ion-item *ngIf="!emailCtrl.valid && emailCtrl.touched" lines="none">
+                  <ion-label>Should be a valid email</ion-label>
+                </ion-item>
+                <ion-item>
+                  <ion-label position="floating">Password</ion-label>
+                  <ion-input type="password" ngModel name="password" required #passwordCtrl="ngModel" minlength="5"></ion-input>
+                </ion-item>
+                <ion-item *ngIf="!passwordCtrl.valid && passwordCtrl.touched" lines="none">
+                  <ion-label>Should at least 5 characters long.</ion-label>
+                </ion-item>
+            </ion-list>
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col size-sm="6" offset-sm="3">
+              <ion-button color="primary" fill="clear" expand="block" (click)="onSwitchAuthMode()">Switch to {{isLogin ? 'Signup' : 'Login'}}</ion-button>
+              <ion-button type="submit" color="primary" class="ion-padding-horizontal" expand="block" [disabled]="!form.valid" >
+                Login
+              </ion-button>
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col size-sm="6" offset-sm="3">
+            <ion-button color="primary" class="ion-padding-horizontal" expand="block" (click)="onSwitchAuthType()">
+              Reset Password
             </ion-button>
-        </ion-col>
-      </ion-row>
-    </ion-grid>
-  </form>
-
-  <form #form="ngForm" (ngSubmit)="onSubmit(form)" *ngIf="!isLogin">
-    <ion-grid>
-      <ion-row>
-        <ion-col size-sm="6" offset-sm="3">
-          <ion-list>
-              <ion-item>
-                <ion-label position="floating">Username</ion-label>
-                <ion-input type="text" ngModel name="username" required #usernameCtrl="ngModel"></ion-input>
-              </ion-item>
-              <ion-item *ngIf="!usernameCtrl.valid && usernameCtrl.touched" lines="none">
-                <ion-label>Should be a valid username</ion-label>
-              </ion-item>
-
-              <ion-item>
-                <ion-label position="floating">Password</ion-label>
-                <ion-input type="password" ngModel name="password" required #passwordCtrl="ngModel" minlength="5"></ion-input>
-              </ion-item>
-              <ion-item *ngIf="!passwordCtrl.valid && passwordCtrl.touched" lines="none">
-                <ion-label>Should at least 5 characters long</ion-label>
-              </ion-item>
-
-              <ion-item>
-                <ion-label position="floating">Name</ion-label>
-                <ion-input type="text" ngModel name="name" required #nameCtrl="ngModel"></ion-input>
-              </ion-item>
-              <ion-item *ngIf="!nameCtrl.valid && nameCtrl.touched" lines="none"></ion-item>
-              
-              <ion-item>
-                <ion-label position="floating">Surname</ion-label>
-                <ion-input type="text" ngModel name="surname" required #surnameCtrl="ngModel"></ion-input>
-              </ion-item>
-              <ion-item *ngIf="!surnameCtrl.valid && surnameCtrl.touched" lines="none"></ion-item>
-
-              <ion-item>
-                <ion-label position="floating">Address</ion-label>
-                <ion-input type="text" ngModel name="address" required #addressCtrl="ngModel"></ion-input>
-              </ion-item>
-              <ion-item *ngIf="!addressCtrl.valid && addressCtrl.touched" lines="none"></ion-item>
-
-              <ion-item>
-                <ion-label position="floating">Phone</ion-label>
-                <ion-input type="text" ngModel name="phone" required #phoneCtrl="ngModel"></ion-input>
-              </ion-item>
-              <ion-item *ngIf="!phoneCtrl.valid && phoneCtrl.touched" lines="none"></ion-item>
-
-              <ion-item>
-                <ion-label position="floating">Email</ion-label>
-                <ion-input type="email" ngModel name="email" required #emailCtrl="ngModel"></ion-input>
-              </ion-item>
-              <ion-item *ngIf="!emailCtrl.valid && emailCtrl.touched" lines="none">
-                <ion-label>Should be a valid email address</ion-label>
-              </ion-item>
-
-          </ion-list>
-        </ion-col>
-      </ion-row>
-      <ion-row>
-        <ion-col size-sm="6" offset-sm="3">
-            <ion-button color="primary" fill="clear" expand="block" (click)="onSwitchAuthMode()">Switch to {{isLogin ? 'Signup' : 'Login'}}</ion-button>
-            <ion-button type="submit" color="primary" class="ion-padding-horizontal" expand="block" [disabled]="!form.valid" >
-              Signup
-            </ion-button>
-        </ion-col>
-      </ion-row>
-    </ion-grid>
-  </form>
-  <!-- <div class="ion-text-center">
-    <ion-spinner color="primary" *ngIf="isLoading"></ion-spinner>
-  </div> -->
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+    </form>
+    <form #form="ngForm" (ngSubmit)="onSubmit(form)" *ngIf="!isLogin">
+      <ion-grid>
+        <ion-row>
+          <ion-col size-sm="6" offset-sm="3">
+            <ion-list>
+                <ion-item>
+                  <ion-label position="floating">Username</ion-label>
+                  <ion-input type="text" ngModel name="username" required #usernameCtrl="ngModel"></ion-input>
+                </ion-item>
+                <ion-item *ngIf="!usernameCtrl.valid && usernameCtrl.touched" lines="none">
+                  <ion-label>Should be a valid username</ion-label>
+                </ion-item>
+  
+                <ion-item>
+                  <ion-label position="floating">Password</ion-label>
+                  <ion-input type="password" ngModel name="password" required #passwordCtrl="ngModel" minlength="5"></ion-input>
+                </ion-item>
+                <ion-item *ngIf="!passwordCtrl.valid && passwordCtrl.touched" lines="none">
+                  <ion-label>Should at least 5 characters long</ion-label>
+                </ion-item>
+  
+                <ion-item>
+                  <ion-label position="floating">Name</ion-label>
+                  <ion-input type="text" ngModel name="name" required #nameCtrl="ngModel"></ion-input>
+                </ion-item>
+                <ion-item *ngIf="!nameCtrl.valid && nameCtrl.touched" lines="none"></ion-item>
+                
+                <ion-item>
+                  <ion-label position="floating">Surname</ion-label>
+                  <ion-input type="text" ngModel name="surname" required #surnameCtrl="ngModel"></ion-input>
+                </ion-item>
+                <ion-item *ngIf="!surnameCtrl.valid && surnameCtrl.touched" lines="none"></ion-item>
+  
+                <ion-item>
+                  <ion-label position="floating">Address</ion-label>
+                  <ion-input type="text" ngModel name="address" required #addressCtrl="ngModel"></ion-input>
+                </ion-item>
+                <ion-item *ngIf="!addressCtrl.valid && addressCtrl.touched" lines="none"></ion-item>
+  
+                <ion-item>
+                  <ion-label position="floating">Phone</ion-label>
+                  <ion-input type="text" ngModel name="phone" required #phoneCtrl="ngModel"></ion-input>
+                </ion-item>
+                <ion-item *ngIf="!phoneCtrl.valid && phoneCtrl.touched" lines="none"></ion-item>
+  
+                <ion-item>
+                  <ion-label position="floating">Email</ion-label>
+                  <ion-input type="email" ngModel name="email" required email #emailCtrl="ngModel"></ion-input>
+                </ion-item>
+                <ion-item *ngIf="!emailCtrl.valid && emailCtrl.touched" lines="none">
+                  <ion-label>Should be a valid email address</ion-label>
+                </ion-item>
+  
+            </ion-list>
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col size-sm="6" offset-sm="3">
+              <ion-button color="primary" fill="clear" expand="block" (click)="onSwitchAuthMode()">Switch to {{isLogin ? 'Signup' : 'Login'}}</ion-button>
+              <ion-button type="submit" color="primary" class="ion-padding-horizontal" expand="block" [disabled]="!form.valid" >
+                Signup
+              </ion-button>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+    </form>
+  </div>
+  <div *ngIf="!isAuth">
+    <form #form="ngForm" (ngSubmit)="onSubmit(form)">
+        <ion-grid>
+          <ion-row>
+            <ion-col size-sm="6" offset-sm="3">
+              <ion-list>
+                  <ion-item>
+                    <ion-label position="floating">Email</ion-label>
+                    <ion-input type="email" ngModel name="email" required email #emailCtrl="ngModel"></ion-input>
+                  </ion-item>
+                  <ion-item *ngIf="!emailCtrl.valid && emailCtrl.touched" lines="none">
+                    <ion-label>Should be a valid email</ion-label>
+                  </ion-item>
+              </ion-list>
+            </ion-col>
+          </ion-row>
+          <ion-row>
+            <ion-col size-sm="6" offset-sm="3">
+                <ion-button color="primary" fill="clear" expand="block" (click)="onSwitchAuthType()">Switch to {{isLogin ? 'Signup' : 'Login'}}</ion-button>
+                <ion-button type="submit" color="primary" class="ion-padding-horizontal" expand="block" [disabled]="!form.valid" >
+                  Recover Password
+                </ion-button>
+            </ion-col>
+          </ion-row>
+        </ion-grid>
+    </form>
+  </div>
 </ion-content>

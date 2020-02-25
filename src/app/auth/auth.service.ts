@@ -4,8 +4,10 @@ import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { LoginRule } from './models/loginInterface.model';
 import { NewUser } from './models/userInterface.model';
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, Observable } from 'rxjs';
 import { FormGroup } from '@angular/forms';
+import { RecoverRule } from './models/recoverInterface.model';
+import { PasswordRule } from './models/changePassword.model';
 
 @Injectable({
   providedIn: 'root'
@@ -20,12 +22,21 @@ export class AuthService {
 
   public registerUser(newUser: NewUser) {
     this.authenticationState.next(true);
-    return this.httpClient.post<{token: string}>(`${this.authUrl}/`, newUser);
+    return this.httpClient.post<{token: string}>(`${this.authUrl}/signup`, newUser);
   }
 
   public loginUser(loginUser: LoginRule) {
     this.authenticationState.next(true);
     return this.httpClient.post<{token: string}>(`${this.authUrl}/login`, loginUser);
+  }
+
+  public recoverPassword(emailUser: RecoverRule): Observable<any> {
+    this.authenticationState.next(true);
+    return this.httpClient.post(`${this.authUrl}/recover`, emailUser);
+  }
+
+  public changePassword(newPassword: PasswordRule, token: string): Observable<any> {
+    return this.httpClient.post(`${this.authUrl}/reset/${token}`, newPassword);
   }
 
   public loggedIn(): boolean {

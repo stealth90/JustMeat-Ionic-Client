@@ -16,6 +16,7 @@ import { AuthService } from './auth/auth.service';
 import { TokenInterceptorService } from './auth/token-interceptor.service';
 
 import { SocketIoModule, SocketIoConfig } from 'ngx-socket-io';
+import { Deeplinks } from '@ionic-native/deeplinks/ngx';
 const config: SocketIoConfig = { url: 'https://just-meat-server.herokuapp.com', options: {} };
 
 @NgModule({
@@ -26,6 +27,7 @@ const config: SocketIoConfig = { url: 'https://just-meat-server.herokuapp.com', 
     AuthGuard,
     AuthService,
     StatusBar,
+    Deeplinks,
     SplashScreen,
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
     { provide: HTTP_INTERCEPTORS, useClass: TokenInterceptorService, multi: true }

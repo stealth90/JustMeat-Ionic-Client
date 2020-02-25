@@ -1,7 +1,9 @@
 {
   "name": "JustMeat",
   "integrations": {
-    "capacitor": {}
+    "capacitor": {},
+    "cordova": {}
   },
-  "type": "angular"
+  "type": "angular",
+  "id": "39c45b9a"
 }

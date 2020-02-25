@@ -5,13 +5,17 @@ import { SplashScreen } from '@ionic-native/splash-screen/ngx';
 import { StatusBar } from '@ionic-native/status-bar/ngx';
 import { AuthService } from './auth/auth.service';
 import { Socket } from 'ngx-socket-io';
+import { Deeplinks } from '@ionic-native/deeplinks/ngx';
+import { AuthPage } from './auth/auth.page';
+import { ResetPasswordPage } from './auth/reset-password/reset-password.page';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-root',
   templateUrl: 'app.component.html',
   styleUrls: ['app.component.scss']
 })
-export class AppComponent implements OnInit {
+export class AppComponent{
 
   constructor(
     private platform: Platform,
@@ -20,7 +24,9 @@ export class AppComponent implements OnInit {
     private authService: AuthService,
     private navController: NavController,
     private socket: Socket,
-    private toastCtrl: ToastController) {
+    private toastCtrl: ToastController,
+    private deepLinks: Deeplinks,
+    private router: Router) {
     this.initializeApp();
   }
 
@@ -34,10 +40,12 @@ export class AppComponent implements OnInit {
     toast.present();
   }
 
-  ngOnInit() {
+  ionViewWillEnter() {
     this.socket.connect();
     this.socket.fromEvent('new-status').subscribe( (data: object & { event: string, status: any}) => {
+      console.log(data);
       if (!this.authService.isRestaurant()) {
+
         this.showToast(`Status ${data.event} to ${data.status.status}`);
       }
     });
@@ -55,23 +63,31 @@ export class AppComponent implements OnInit {
       this.splashScreen.hide();
       this.platform.backButton.subscribeWithPriority(1, () => {});
       // tslint:disable-next-line: no-string-literal
-      if (localStorage.getItem['firstTimeLoad'] || localStorage.getItem['firstTimeLoad'] !== 'TRUE') {
-          // tslint:disable-next-line: no-string-literal
-          localStorage.setItem['firstTimeLoad'] = 'TRUE';
-          this.navController.navigateRoot('homepage');
-      } else {
-        return this.navController.navigateRoot(['restaurants/tabs/discover']);
-      }
-      /* this.authService.authenticationState.subscribe( state => {
-        if (!state || this.authService.loggedIn()) {
-          return this.navController.navigateRoot(['restaurants/tabs/discover']);
+      this.deepLinks.routeWithNavController(this.navController, {
+        '/auth/passwordUpdate' : ResetPasswordPage
+      }).subscribe( match => {
+        alert(JSON.stringify(match));
+        this.router.navigate(['auth/passwordUpdate'], match.$args);
+        //this.navController.navigateRoot('auth/passwordUpdate', match.$args);
+      } , noMatch => {
+        if (localStorage.getItem['firstTimeLoad'] || localStorage.getItem['firstTimeLoad'] !== 'TRUE') {
+            // tslint:disable-next-line: no-string-literal
+            localStorage.setItem['firstTimeLoad'] = 'TRUE';
+            this.navController.navigateRoot('homepage');
         } else {
-          return this.navController.navigateRoot('homepage');
+          return this.navController.navigateRoot('restaurants/tabs/discover');
         }
-      }); */
+        /* this.authService.authenticationState.subscribe( state => {
+          if (!state || this.authService.loggedIn()) {
+            return this.navController.navigateRoot(['restaurants/tabs/discover']);
+          } else {
+            return this.navController.navigateRoot('homepage');
+          }
+        }); */
+      });
     });
   }
-  goToRestaurants(){
+  goToRestaurants() {
     return this.navController.navigateRoot(['restaurants/tabs/discover']);
   }
 

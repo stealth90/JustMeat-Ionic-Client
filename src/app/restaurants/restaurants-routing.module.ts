@@ -2,7 +2,6 @@ import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
 import { RestaurantsPage } from './restaurants.page';
-import { AuthGuard } from '../auth/auth.guard';
 import { RestaurantGuard } from '../auth/restaurant.guard';
 
 const routes: Routes = [

@@ -105,7 +105,8 @@ export class DetailsPage implements OnInit, OnDestroy {
         status
       ).subscribe((stat: string) => {
         loadingElm.dismiss();
-        this.socket.emit('status-changed', stat);
+        //this.socket.emit('status-changed', stat);
+        console.log(this.socket.emit('status-changed', stat));
         this.navCtrl.navigateBack('/restaurants/tabs/orders');
       });
     });

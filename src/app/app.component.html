@@ -8,13 +8,13 @@
     <ion-content>
       <ion-list>
         <ion-menu-toggle>
-          <ion-item lines="none" (click)='goToRestaurants()' routerLink="/restaurants/tabs/discover" *ngIf="!isAdmin() && !isRestaurant()">
+          <ion-item lines="none" (click)='goToRestaurants()'*ngIf="!isAdmin() && !isRestaurant()">
             <ion-icon name="business" slot="start"></ion-icon>
             <ion-label>Discover Restaurants</ion-label>
           </ion-item>
         </ion-menu-toggle>
         <ion-menu-toggle>
-          <ion-item lines="none" (click)='goToOrders()'routerLink="/orders" *ngIf="!isAdmin()">
+          <ion-item lines="none" (click)='goToOrders()' *ngIf="!isAdmin()">
             <ion-icon name="checkbox-outline" slot="start"></ion-icon>
             <ion-label>Your Orders</ion-label>
           </ion-item>
