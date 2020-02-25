@@ -66,9 +66,7 @@ export class AppComponent{
       this.deepLinks.routeWithNavController(this.navController, {
         '/auth/passwordUpdate' : ResetPasswordPage
       }).subscribe( match => {
-        alert(JSON.stringify(match));
         this.router.navigate(['auth/passwordUpdate'], match.$args);
-        //this.navController.navigateRoot('auth/passwordUpdate', match.$args);
       } , noMatch => {
         if (localStorage.getItem['firstTimeLoad'] || localStorage.getItem['firstTimeLoad'] !== 'TRUE') {
             // tslint:disable-next-line: no-string-literal
