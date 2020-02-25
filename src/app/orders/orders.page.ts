@@ -42,7 +42,7 @@ export class OrdersPage implements OnInit {
     });
     this.socket.fromEvent('new-status').subscribe( (data: object & { event: string, status: any}) => {
       if (!this.authService.isRestaurant()) {
-        this.showToast(`Status ${data.event} to ${data.status.status}`);
+        this.showToast(`One of your order ${data.event} to ${data.status.status}`);
       }
     });
   }
@@ -64,7 +64,6 @@ export class OrdersPage implements OnInit {
   }
 
   ionViewWillEnter() {
-    this.router.navigate(['/restaurants/tabs/orders']);
     this.isLoading = true;
     this.restaurantsService.fetchRestaurants().subscribe(() => {
       this.ordersService.fetchOrders().subscribe(() => {

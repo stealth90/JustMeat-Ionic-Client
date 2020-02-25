@@ -44,7 +44,7 @@ export class AppComponent {
     this.socket.connect();
     this.socket.fromEvent('new-status').subscribe( (data: object & { event: string, status: any}) => {
       if (!this.authService.isRestaurant()) {
-        this.showToast(`Status ${data.event} to ${data.status.status}`);
+        this.showToast(`One of your order ${data.event} to ${data.status.status}`);
       }
     });
   }
