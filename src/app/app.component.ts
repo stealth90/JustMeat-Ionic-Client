@@ -15,7 +15,11 @@ import { Router } from '@angular/router';
   templateUrl: 'app.component.html',
   styleUrls: ['app.component.scss']
 })
-export class AppComponent {
+export class AppComponent implements OnInit {
+
+  ngOnInit() {
+    this.socket.connect();
+  }
 
   constructor(
     private platform: Platform,
@@ -41,7 +45,6 @@ export class AppComponent {
   }
 
   ionViewWillEnter() {
-    this.socket.connect();
     this.socket.fromEvent('new-status').subscribe( (data: object & { event: string, status: any}) => {
       if (!this.authService.isRestaurant()) {
         this.showToast(`One of your order ${data.event} to ${data.status.status}`);

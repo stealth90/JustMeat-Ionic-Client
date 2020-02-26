@@ -3,7 +3,7 @@ import { Router } from '@angular/router';
 import { Plate } from 'src/app/restaurants/restaurant.model';
 import { Order, OrderList } from '../order.model';
 import { AuthService } from 'src/app/auth/auth.service';
-import { ModalController, LoadingController } from '@ionic/angular';
+import { ModalController, LoadingController, NavController } from '@ionic/angular';
 import { AllergyComponent } from '../allergy/allergy.component';
 import { OrderService } from '../order.service';
 import { NewUser } from 'src/app/auth/models/userInterface.model';
@@ -31,6 +31,7 @@ export class ConfirmOrderComponent implements OnInit {
     private orderService: OrderService,
     private authService: AuthService,
     private loaderCtrl: LoadingController,
+    private navCtrl: NavController
   ) { }
 
   ngOnInit() {
@@ -88,7 +89,7 @@ export class ConfirmOrderComponent implements OnInit {
             this.newOrder
           ).subscribe(() => {
             loadingElm.dismiss();
-            this.router.navigate(['/restaurants/tabs/discover']);
+            this.navCtrl.navigateRoot(['/restaurants/tabs/discover']);
           });
       });
 
@@ -99,5 +100,4 @@ export class ConfirmOrderComponent implements OnInit {
         this.userSub.unsubscribe();
       }
     }
-
 }
