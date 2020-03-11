@@ -68,11 +68,11 @@ export class AppComponent implements OnInit {
         '/auth/passwordUpdate' : ResetPasswordPage
       }).subscribe( match => {
         this.router.navigate(['auth/passwordUpdate'], match.$args);
-      } , noMatch => {
+      } , () => {
         // tslint:disable-next-line: no-string-literal
-        if (localStorage.getItem['firstTimeLoad'] || localStorage.getItem['firstTimeLoad'] !== 'TRUE') {
+        if (localStorage.getItem('firstTimeLoad') || localStorage.getItem('firstTimeLoad') !== 'TRUE') {
             // tslint:disable-next-line: no-string-literal
-            localStorage.setItem['firstTimeLoad'] = 'TRUE';
+            localStorage.setItem('firstTimeLoad', 'TRUE');
             this.navController.navigateRoot('homepage');
         } else {
           return this.navController.navigateRoot('restaurants/tabs/discover');
